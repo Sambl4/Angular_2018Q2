@@ -1,0 +1,31 @@
+.list-group-item {
+  margin-top: 10px;
+}
+
+.card-section {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-main-section {
+  min-width: 90%;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+}
+
+.card-title {
+  align-items: center;
+}
+
+.card-header-info {
+  display: flex;
+  align-items: center;
+}
+
+.card-header-info div {
+  margin-left: 20px;
+}
