@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { ListItem } from '../model/list-item.model'
+import { ListItem } from '../model/list-item.model';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +35,9 @@ export class ListService {
         title: 'Title 1',
         duration: 1,
         date: new Date(),
-        description: 'Angular is running in the development mode. Call enableProdMode() to enable the production mode'
+        description: 'Angular is running in the development mode. Call enableProdMode() to enable the production mode' +
+                      'Angular is running in the development mode. Call enableProdMode() to enable the production mode' +
+                      'Angular is running in the development mode. Call enableProdMode() to enable the production mode'
       }, {
         id: 2,
         title: 'Title 2',
@@ -49,6 +51,6 @@ export class ListService {
         date: new Date(),
         description: 'Description 3'
       }
-    ]
+    ];
   }
 }

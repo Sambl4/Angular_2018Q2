@@ -1,7 +1,7 @@
 export interface ListItem {
-  id: number,
-  title: string,
-  duration: number,
-  date: object,
-  description: string
+  id: number;
+  title: string;
+  duration: number;
+  date: object;
+  description: string;
 }

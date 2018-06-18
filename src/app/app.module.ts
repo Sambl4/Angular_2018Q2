@@ -11,9 +11,6 @@ import { ListModule } from './list/list.module';
 import { HomeModule } from './home/home.module';
 import { AuthorizationModule } from './authorization/authorization.module';
 
-// import { ListComponent } from './list/list/list.component';
-// import { ListItemComponent } from './list/list-item/list-item.component';
-
 @NgModule({
   declarations: [
     AppComponent

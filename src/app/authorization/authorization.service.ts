@@ -11,7 +11,4 @@ export class AuthorizationService {
   getIsLogged() {
     return this.isLogged;
   }
-
-
-
 }

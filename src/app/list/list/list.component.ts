@@ -11,8 +11,7 @@ import { ListService } from '../list.service';
 })
 
 export class ListComponent implements OnInit {
-  public listItems: ListItem[] = []
-
+  public listItems: ListItem[] = [];
 
   constructor( private listService: ListService) { }
 

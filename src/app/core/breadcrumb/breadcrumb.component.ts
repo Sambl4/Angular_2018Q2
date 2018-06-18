@@ -14,7 +14,8 @@ export class BreadcrumbComponent implements OnInit {
       path: 'coursesList',
       component: 'Courses List'
     }
-  ]
+  ];
+
   constructor() { }
 
   ngOnInit() {
