@@ -1,0 +1,13 @@
+.search {
+  min-width: 100px;
+  transition-property: min-width;
+  transition-duration: 0.5s;
+}
+
+.search:hover {
+  min-width: 600px;
+}
+
+.search:focus {
+  min-width: 600px;
+}

@@ -1,0 +1,16 @@
+<div class="list-group-item list-group-item-action list-group-item-light card-section">
+  <div class="card-main-section">
+    <div class="card-header">
+      <h4 class="card-title">{{listItem.title}}</h4>
+      <section class="card-header-info">
+        <div>{{listItem.duration}}</div>
+        <div>{{listItem.date | date: 'dd.MM.yyyy'}}</div>
+      </section>
+    </div>
+    <div>{{listItem.description}}</div>
+  </div>
+  <section class="card-control-section btn-group-vertical">
+    <button class="btn btn-outline-info">Edit</button>
+    <button class="btn btn-outline-danger">Delete</button>
+  </section>
+</div>
