@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { SearchbarComponent } from './searchbar/searchbar.component';
 
@@ -8,7 +9,8 @@ import { ListItemComponent } from './list-item/list-item.component';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ],
   declarations: [
     ListComponent,

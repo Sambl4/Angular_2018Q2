@@ -3,6 +3,14 @@
       <app-searchbar></app-searchbar>
       <button class="btn btn-outline-success my-1">Add new Course</button>
   </div>
-  <app-list-item *ngFor="let item of listItems" [listItem]="item"></app-list-item>
-  <button class="btn btn-outline-info my-3 mr-sm-2 container">Load more</button>
+  <app-list-item
+        *ngFor="let item of listItems"
+        [listItem]="item"
+        (deleteItemById)="deleteItemById($event)">
+  </app-list-item>
+  <button
+        (click)="loadMore()"
+        class="btn btn-outline-info my-3 mr-sm-2 container">
+    Load more
+  </button>
 </div>

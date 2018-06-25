@@ -5,10 +5,11 @@
   background-color: #e9ecef;
   align-items: center;
   margin-top: -50px;
+  justify-content: flex-end;
 }
 
-.container {
-  display: flex;
-  justify-content: flex-end;
+.сopyright {
+  margin-right: 30px;
+  /*display: flex;*/
 }
 
