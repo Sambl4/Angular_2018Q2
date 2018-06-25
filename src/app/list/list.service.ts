@@ -31,7 +31,7 @@ export class ListService {
         date: new Date(),
         description: 'Description 3'
       }, {
-        id: 1,
+        id: 4,
         title: 'Title 1',
         duration: 1,
         date: new Date(),
@@ -39,13 +39,13 @@ export class ListService {
                       'Angular is running in the development mode. Call enableProdMode() to enable the production mode' +
                       'Angular is running in the development mode. Call enableProdMode() to enable the production mode'
       }, {
-        id: 2,
+        id: 5,
         title: 'Title 2',
         duration: 1,
         date: new Date(),
         description: 'Description 2'
       }, {
-        id: 3,
+        id: 6,
         title: 'Title 3',
         duration: 3,
         date: new Date(),

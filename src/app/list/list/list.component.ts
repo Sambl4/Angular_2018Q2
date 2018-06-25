@@ -19,4 +19,12 @@ export class ListComponent implements OnInit {
     this.listItems = this.listService.getListItems();
   }
 
+  deleteItemById(id: number) {
+    console.log(id);
+  }
+
+  loadMore() {
+    console.log('load more items');
+  }
+
 }

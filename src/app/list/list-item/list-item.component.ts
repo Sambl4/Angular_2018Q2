@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { ListItem } from '../../model/list-item.model';
 
@@ -9,9 +9,13 @@ import { ListItem } from '../../model/list-item.model';
 })
 export class ListItemComponent implements OnInit {
   @Input() public listItem: ListItem;
+  @Output() deleteItemById: EventEmitter<number> = new EventEmitter<number>();
   constructor() { }
 
   ngOnInit() {
   }
 
+  deleteItem(id: number) {
+    this.deleteItemById.emit(id);
+  }
 }

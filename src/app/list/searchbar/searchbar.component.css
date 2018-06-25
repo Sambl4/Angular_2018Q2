@@ -4,7 +4,7 @@
   transition-duration: 0.5s;
 }
 
-.search:hover {
+.form-inline:hover .search {
   min-width: 600px;
 }
 
