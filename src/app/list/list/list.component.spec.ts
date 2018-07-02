@@ -1,14 +1,43 @@
+import { Component, Input } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { ListService } from '../list.service';
+
 import { ListComponent } from './list.component';
+import { ListItem } from '../../model/list-item.model';
+
+@Component({
+  selector: 'app-searchbar',
+  template: ''
+})
+class MockSearchbarComponent {
+}
+
+@Component({
+  selector: 'app-list-item',
+  template: ''
+})
+class MockListItemComponent {
+  @Input() listItem: ListItem;
+}
 
 describe('ListComponent', () => {
   let component: ListComponent;
   let fixture: ComponentFixture<ListComponent>;
+  let listService: Partial<ListService>;
+
+  beforeEach(() => {
+    listService = { getListItems: jasmine.createSpy('getListItems')};
+  });
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ListComponent ]
+      declarations: [
+        ListComponent,
+        MockListItemComponent,
+        MockSearchbarComponent
+      ],
+      providers: [{provide: ListService, useValue: listService}]
     })
     .compileComponents();
   }));
@@ -19,7 +48,7 @@ describe('ListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create component', () => {
     expect(component).toBeTruthy();
   });
 });
