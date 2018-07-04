@@ -9,7 +9,11 @@ describe('AuthorizationService', () => {
     });
   });
 
-  it('should be created', inject([AuthorizationService], (service: AuthorizationService) => {
-    expect(service).toBeTruthy();
+  it('should return islogged status', inject([AuthorizationService], (service: AuthorizationService) => {
+    let result: boolean;
+
+    result = service.getIsLogged();
+
+    expect(result).toBeFalsy();
   }));
 });

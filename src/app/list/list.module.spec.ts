@@ -7,7 +7,7 @@ describe('ListModule', () => {
     listModule = new ListModule();
   });
 
-  it('should create an instance', () => {
-    expect(listModule).toBeTruthy();
-  });
+  // it('should create an instance', () => {
+  //   expect(listModule).toBeTruthy();
+  // });
 });
