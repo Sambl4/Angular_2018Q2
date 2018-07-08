@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Directive } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -11,9 +11,12 @@ import { ListModule } from './list/list.module';
 import { HomeModule } from './home/home.module';
 import { AuthorizationModule } from './authorization/authorization.module';
 
+import { BorderHighlightDirective } from './directives/highlight.directive';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BorderHighlightDirective
   ],
   imports: [
     BrowserModule,
