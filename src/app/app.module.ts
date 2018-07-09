@@ -11,12 +11,9 @@ import { ListModule } from './list/list.module';
 import { HomeModule } from './home/home.module';
 import { AuthorizationModule } from './authorization/authorization.module';
 
-import { BorderHighlightDirective } from './directives/highlight.directive';
-
 @NgModule({
   declarations: [
-    AppComponent,
-    BorderHighlightDirective
+    AppComponent
   ],
   imports: [
     BrowserModule,
