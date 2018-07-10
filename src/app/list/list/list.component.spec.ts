@@ -6,6 +6,8 @@ import { ListService } from '../list.service';
 import { ListComponent } from './list.component';
 import { ListItem } from '../../model/list-item.model';
 
+import { OrderBycreationDatePipe } from '../../share/pipe/my-orderby.pipe';
+
 @Component({
   selector: 'app-searchbar',
   template: ''
@@ -35,7 +37,8 @@ describe('ListComponent', () => {
       declarations: [
         ListComponent,
         MockListItemComponent,
-        MockSearchbarComponent
+        MockSearchbarComponent,
+        OrderBycreationDatePipe
       ],
       providers: [{provide: ListService, useValue: listService}]
     })

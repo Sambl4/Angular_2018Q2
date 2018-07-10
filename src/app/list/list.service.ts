@@ -64,11 +64,11 @@ export class ListService {
     return originalListItems;
   }
 
-  public getRenderingItems(arr?: ListItem[]): ListItem[] {
-    return arr ? this.setRenderingItems(arr) : this.setRenderingItems(this.getOriginalListItems());
+  public getRenderingItems(): ListItem[] {
+    return renderingListItems ;
   }
 
-  public setRenderingItems(arr: ListItem[]): ListItem[] {
-    return renderingListItems = arr;
+  public setRenderingItems(arr: ListItem[]): void {
+    renderingListItems = arr;
   }
 }

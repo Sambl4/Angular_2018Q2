@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { ListItem } from '../../model/list-item.model';
 
@@ -16,12 +16,12 @@ export class ListComponent implements OnInit {
   constructor( private listService: ListService) { }
 
   ngOnInit() {
-    this.listItems = this.listService.getRenderingItems();
+    this.listItems = this.listService.getOriginalListItems();
   }
 
-  // ngOnChanges() {
-  //   this.listItems = this.listService.getRenderingItems();
-  // }
+  filteredArray(value: ListItem[]) {
+    this.listItems = value;
+  }
 
   deleteItemById(id: number) {
     console.log(id);
