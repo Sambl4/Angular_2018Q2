@@ -27,7 +27,7 @@ describe('ListComponent', () => {
   let listService: Partial<ListService>;
 
   beforeEach(() => {
-    listService = { getListItems: jasmine.createSpy('getListItems')};
+    listService = { getOriginalListItems: jasmine.createSpy('getListItems')};
   });
 
   beforeEach(async(() => {

@@ -17,13 +17,14 @@ export class SearchbarComponent implements OnInit {
   constructor(private searchByTitlePipe: SearchByTitlePipe, private listService: ListService) { }
 
   ngOnInit() {
-    this.searchedArray = this.listService.getListItems();
+    this.searchedArray = this.listService.getRenderingItems();
   }
 
   search() {
+    let filteredArray: ListItem[];
     if (this.searchValue && this.searchValue.length) {
-      console.log(this.searchValue);
-      console.log(this.searchByTitlePipe.transform(this.searchedArray, this.searchValue));
+      filteredArray = this.searchByTitlePipe.transform(this.searchedArray, this.searchValue);
+      this.listService.getRenderingItems(filteredArray);
       this.searchValue = '';
     }
   }
