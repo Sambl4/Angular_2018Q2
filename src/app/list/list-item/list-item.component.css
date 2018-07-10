@@ -29,3 +29,12 @@
 .card-header-info div {
   margin-left: 20px;
 }
+
+.star-rate {
+  font-size: 20px;
+  color: lightgrey;
+}
+
+.my-rate {
+  color: gold;
+}

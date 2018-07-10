@@ -4,4 +4,5 @@ export interface ListItem {
   duration: number;
   date: object;
   description: string;
+  rate: boolean;
 }
