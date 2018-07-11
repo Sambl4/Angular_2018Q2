@@ -1,13 +1,21 @@
-<div class="list-group-item list-group-item-action list-group-item-light card-section">
+<div class="list-group-item list-group-item-action list-group-item-light card-section"
+    [appBorderHighlighter]="listItem.date">
   <div class="card-main-section">
     <div class="card-header">
-      <h4 class="card-title">{{listItem.title}}</h4>
+      <h4 class="card-title">{{listItem.title | uppercase}}
+        <span *ngIf="listItem.rate" class="">
+            <i [ngClass]="{'my-rate': isMyRate}"
+                class="fa fa-star fa-sm star-rate"
+                aria-hidden="true"
+                (click)="isMyRate = !isMyRate"></i>
+        </span>
+      </h4>
       <section class="card-header-info">
-        <div>{{listItem.duration}}</div>
+        <div>{{listItem.duration | durationFormat: listItem.duration}}</div>
         <div>{{listItem.date | date: 'dd.MM.yyyy'}}</div>
       </section>
     </div>
-    <div class='card-description'>{{listItem.description}}</div>
+    <div class='card-description' >{{listItem.description}}</div>
   </div>
   <section class="card-control-section btn-group-vertical">
     <button class="btn btn-outline-info">Edit</button>

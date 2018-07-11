@@ -16,7 +16,11 @@ export class ListComponent implements OnInit {
   constructor( private listService: ListService) { }
 
   ngOnInit() {
-    this.listItems = this.listService.getListItems();
+    this.listItems = this.listService.getOriginalListItems();
+  }
+
+  filteredArray(value: ListItem[]) {
+    this.listItems = value;
   }
 
   deleteItemById(id: number) {

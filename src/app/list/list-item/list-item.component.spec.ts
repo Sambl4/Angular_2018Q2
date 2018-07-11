@@ -6,6 +6,9 @@ import { By } from '@angular/platform-browser';
 import { ListItemComponent } from './list-item.component';
 import { ListItem } from '../../model/list-item.model';
 
+import { BorderHighlightDirective } from '../../share/directives/highlight.directive';
+import { DurationFormatPipe } from '../../share/pipe/duration-format.pipe';
+
 @Component({
   template:`
   <app-list-item
@@ -23,7 +26,8 @@ class TestHostComponent implements OnInit {
     title: 'test title',
     date: new Date(),
     description: 'test descroption',
-    duration: 15
+    duration: 15,
+    rate: true
   }
 
   ngOnInit() {}
@@ -43,7 +47,9 @@ describe('ListItemComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         ListItemComponent,
-        TestHostComponent
+        TestHostComponent,
+        BorderHighlightDirective,
+        DurationFormatPipe
       ]
     })
     .compileComponents();
@@ -60,18 +66,25 @@ describe('ListItemComponent', () => {
   });
 
   it('should render correct template', () => {
-    const nativeElement: HTMLElement = fixture.nativeElement;
-    const cardTitle: HTMLElement = nativeElement.querySelector('.card-title');
-    const cardHeaderInfo: HTMLElement = nativeElement.querySelector('.card-header-info');
-    const cardDescription: HTMLElement = nativeElement.querySelector('.card-description');
-    const cardControlSection: HTMLElement = nativeElement.querySelector('.card-control-section');
+    // const nativeElement: HTMLElement = fixture.nativeElement;
+    const cardTitle: HTMLElement = fixture.nativeElement.querySelector('.card-title');
+    const cardHeaderInfo: HTMLElement = fixture.nativeElement.querySelector('.card-header-info');
+    const cardDescription: HTMLElement = fixture.nativeElement.querySelector('.card-description');
+    const cardControlSection: HTMLElement = fixture.nativeElement.querySelector('.card-control-section');
 
-    expect(cardTitle.textContent).toEqual(component.listItem.title);
-    expect(cardHeaderInfo.firstChild.textContent).toEqual(component.listItem.duration.toString());
+    expect(cardTitle.textContent).toEqual(component.listItem.title.toUpperCase() + ' ');
+    expect(cardHeaderInfo.firstChild.textContent).toEqual(component.listItem.duration.toString() + ' min.');
     expect(cardHeaderInfo.lastChild.textContent).toEqual(formatDate(component.listItem.date.toString(), 'dd.MM.yyyy', 'en-US'));
     expect(cardDescription.textContent).toEqual(component.listItem.description);
     expect(cardControlSection.firstChild.textContent).toEqual('Edit');
     expect(cardControlSection.lastChild.textContent).toEqual('Delete');
+  });
+
+  it('should have blue border', () => {
+    const item: HTMLElement = fixture.nativeElement.querySelector('.card-section');
+    const borderColor = item.style.border;
+
+    expect(borderColor).toBe('1px solid blue');
   });
 
   it('should delete item by id', () => {
