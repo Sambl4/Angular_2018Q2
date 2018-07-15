@@ -11,6 +11,7 @@ import { ListItem } from '../../model/list-item.model';
 export class ListItemComponent implements OnInit {
   @Input() public listItem: ListItem;
   @Output() deleteItemById: EventEmitter<number> = new EventEmitter<number>();
+  @Output() updateItem: EventEmitter<ListItem> = new EventEmitter<ListItem>();
 
   public isMyRate = false; // will be received from user service
   constructor() { }
@@ -20,5 +21,13 @@ export class ListItemComponent implements OnInit {
 
   deleteItem(id: number) {
     this.deleteItemById.emit(id);
+  }
+
+  saveItem(item: ListItem) {
+    this.updateItem.emit(item);
+  }
+
+  editItem(item: ListItem) {
+    return item.editMode = !item.editMode;
   }
 }

@@ -1,13 +1,14 @@
 <div>
     <div class="searchbar">
       <app-searchbar (filteredArray)="filteredArray($event)"></app-searchbar>
-      <button class="btn btn-outline-success my-1">Add new Course</button>
+      <button (click)="addNewCourse()" class="btn btn-outline-success my-1">Add new Course</button>
     </div>
   <div *ngIf="listItems.length">
     <app-list-item
           *ngFor="let item of (listItems | orderBycreationDate)"
           [listItem]="item"
           (deleteItemById)="deleteItemById($event)"
+          (updateItem)="updateItem($event)"
           >
     </app-list-item>
     <button

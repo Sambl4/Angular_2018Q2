@@ -1,4 +1,4 @@
-<div class="list-group-item list-group-item-action list-group-item-light card-section"
+<div *ngIf="!listItem.editMode" class="list-group-item list-group-item-action list-group-item-light card-section"
     [appBorderHighlighter]="listItem.date">
   <div class="card-main-section">
     <div class="card-header">
@@ -18,7 +18,37 @@
     <div class='card-description' >{{listItem.description}}</div>
   </div>
   <section class="card-control-section btn-group-vertical">
-    <button class="btn btn-outline-info">Edit</button>
+    <button (click)="editItem(listItem)" class="btn btn-outline-info">Edit</button>
     <button (click)="deleteItem(listItem.id)" class="btn btn-outline-danger">Delete</button>
+  </section>
+</div>
+
+<div *ngIf="listItem.editMode" class="list-group-item list-group-item-action list-group-item-light card-section editMode">
+  <div class="card-main-section">
+    <div class="card-header">
+      <h4 class="card-title">
+        <input class=""
+              placeholder="Put the title"
+              [(ngModel)]="listItem.title"
+              required="">
+      </h4>
+      <section class="card-header-info">
+        <div>{{listItem.duration | durationFormat: listItem.duration}}</div>
+        <div *ngIf="listItem.date">{{listItem.date | date: 'dd.MM.yyyy'}}</div>
+        <input *ngIf="!listItem.date" type="date" [ngModel]="listItem.date"
+       value="{{listItem.date | date:'yyyy-MM-dd'}}" (ngModelChange)="listItem.date=$event">
+      </section>
+    </div>
+    <div class='card-description' >
+      <textarea class="textarea"
+          placeholder="Put the release date"
+          [(ngModel)]="listItem.description"
+          required="">
+      </textarea>
+    </div>
+  </div>
+  <section class="card-control-section btn-group-vertical">
+    <button (click)="saveItem(listItem)" class="btn btn-outline-success">Save</button>
+    <button (click)="editItem(listItem)" class="btn btn-outline-danger">Cancel</button>
   </section>
 </div>

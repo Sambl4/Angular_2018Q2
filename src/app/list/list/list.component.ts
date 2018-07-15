@@ -27,6 +27,14 @@ export class ListComponent implements OnInit {
     console.log(id);
   }
 
+  updateItem(item: ListItem) {
+    this.listService.updateItem(item);
+  }
+
+  addNewCourse() {
+
+  }
+
   loadMore() {
     console.log('load more items');
   }

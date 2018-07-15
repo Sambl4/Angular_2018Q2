@@ -5,4 +5,5 @@ export interface ListItem {
   date: object;
   description: string;
   rate: boolean;
+  editMode: boolean;
 }
