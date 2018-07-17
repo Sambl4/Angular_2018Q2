@@ -7,12 +7,18 @@ import { AuthorizationService } from '../../authorization/authorization.service'
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
+
 export class HeaderComponent implements OnInit {
+  public userName: string;
+
   isLogged: boolean;
   constructor(private authorizationService: AuthorizationService) { }
 
   ngOnInit() {
-    this.isLogged = this.authorizationService.isLogged;
+    this.isLogged = this.authorizationService.IsAuthenticated();
+    if (this.isLogged) {
+      this.userName = this.authorizationService.GetUserInfo();
+    }
   }
 
 }

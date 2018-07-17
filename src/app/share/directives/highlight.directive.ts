@@ -16,7 +16,7 @@ export class BorderHighlightDirective implements OnChanges {
   }
   private borderHighlighterByDate() {
     const today: number =  currentDay.getTime();
-    const creationDate: number =  this.date.getTime();
+    const creationDate: number =  new Date(this.date).getTime();
     const timeDiff: number = today - TIME_FRAME;
 
     if (creationDate < today && creationDate >= timeDiff) {

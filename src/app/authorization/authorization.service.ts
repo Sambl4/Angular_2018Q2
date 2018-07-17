@@ -3,12 +3,30 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthorizationService {
-  isLogged: boolean = false;
+  private authInfo = {
+    userMail: 'qwerty@gmail.com',
+    userName: 'Qwerty',
+    userPass: '123',
+    token: '57fake78Token43forQwerty21User'
+  };
 
   constructor() { }
 
-  getIsLogged() {
-    return this.isLogged;
+  Login() {
+
+  }
+
+  Logout() {
+
+  }
+
+  IsAuthenticated(): boolean {
+    return true;
+  }
+
+  GetUserInfo() {
+    return this.authInfo.userName;
   }
 }

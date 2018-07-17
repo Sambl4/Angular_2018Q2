@@ -31,7 +31,7 @@ export class ListComponent implements OnInit {
     this.options = {
       title: 'Delete course.',
       message: 'Do you really want to delete ' + listItem.title + ' course? '
-    }
+    };
   }
 
   confirmResult(result: boolean) {

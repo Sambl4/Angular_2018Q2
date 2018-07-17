@@ -5,7 +5,7 @@
   </div>
 
   <div class="login-section">
-      <div *ngIf="isLogged" class="username"> User name </div>
+      <div *ngIf="isLogged" class="username">{{userName}}</div>
       <button class="btn btn-light btn-logout"
           (click)="isLogged = !isLogged" routerLink="../authorization">
           <span *ngIf="!isLogged">Login</span>

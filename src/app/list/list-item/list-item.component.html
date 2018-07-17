@@ -12,7 +12,7 @@
       </h4>
       <section class="card-header-info">
         <div>{{listItem.duration | durationFormat: listItem.duration}}</div>
-        <div>{{listItem.date | date: 'dd.MM.yyyy'}}</div>
+        <div>{{listItem.date | date: 'yyyy-MM-dd'}}</div>
       </section>
     </div>
     <div class='card-description' >{{listItem.description}}</div>
@@ -36,7 +36,7 @@
         <!-- <div *ngIf="listItem.date">{{listItem.date | date: 'dd.MM.yyyy'}}</div> -->
         <!-- <input *ngIf="!listItem.date" type="date" [ngModel]="listItem.date"
        value="{{listItem.date | date:'yyyy-MM-dd'}}" (ngModelChange)="listItem.date=$event"> -->
-       <input class="date-editmode" placeholder="Put release date dd.mm.yyyy" [(ngModel)]="listItem.date">
+       <input class="date-editmode" placeholder="Put release date yyyy.mm.dd" [(ngModel)]="listItem.date">
       </section>
     </div>
     <div class='card-description' >
