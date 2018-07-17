@@ -5,11 +5,13 @@
   </div>
 
   <div class="login-section">
-      <div *ngIf="isLogged" class="username">{{userName}}</div>
-      <button class="btn btn-light btn-logout"
-          (click)="isLogged = !isLogged" routerLink="../authorization">
-          <span *ngIf="!isLogged">Login</span>
-          <span *ngIf="isLogged">Logout</span>
-      </button>
+      <div *ngIf="!isLogged">
+        <button class="btn btn-light btn-logout" routerLink="../authorization">Login</button>
+      </div>
+      <div  *ngIf="isLogged" class="login-section">
+        <div class="username">{{userName}}</div>
+        <button (click)="logout()" class="btn btn-light btn-logout">Logout</button>
+      </div>
+
   </div>
 </div>
