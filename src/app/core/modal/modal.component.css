@@ -1,0 +1,13 @@
+.modal.show.fade {
+  box-shadow: 0 0 15px;
+}
+
+/*.show {
+  display: block;
+}*/
+
+.modalWindow {
+  position: fixed;
+  box-shadow: 0 0 15px;
+  display: block;
+}

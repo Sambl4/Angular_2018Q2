@@ -46,7 +46,7 @@ const originalListItems:  ListItem[] = [
     date: new Date('07.05.2018'),
     description: 'Description 2',
     rate: false,
-    editMode: true,
+    editMode: false,
   }, {
     id: 6,
     title: 'Title 3',
@@ -80,26 +80,35 @@ export class ListService {
     renderingListItems = arr;
   }
 
-  public createListItem(newItem: ListItem) {
-    originalListItems.push(newItem);
+  public createListItem() {
+    originalListItems.unshift(this.generateNewItem());
   }
 
   public updateItem(item: ListItem) {
     let updatedItem: ListItem = this.getListItemById(item.id);
 
-    console.log('before   ', updatedItem);
-    // updatedItem.title = item.title;
-    // updatedItem.description = item.description;
-    // ip
+    item.date = new Date(item.date.toString());
+
     updatedItem = item;
-    console.log('after   ', updatedItem);
   }
 
-  public removeListItemById() {
-
+  public removeListItemById(id: number) {
+    originalListItems.splice(_.findIndex(originalListItems, {id: id}), 1);
   }
 
   private getListItemById(id: number) {
     return _.find(originalListItems, {id: id})
+  }
+
+  private generateNewItem() {
+    return {
+      id: Date.now(),
+      title: null,
+      duration: Math.floor(Math.random() * (240 - 15)) + 15,
+      date: null,
+      description: null,
+      rate: false,
+      editMode: true,
+    }
   }
 }

@@ -10,7 +10,7 @@ import { ListItem } from '../../model/list-item.model';
 
 export class ListItemComponent implements OnInit {
   @Input() public listItem: ListItem;
-  @Output() deleteItemById: EventEmitter<number> = new EventEmitter<number>();
+  @Output() deleteItemById: EventEmitter<ListItem> = new EventEmitter<ListItem>();
   @Output() updateItem: EventEmitter<ListItem> = new EventEmitter<ListItem>();
 
   public isMyRate = false; // will be received from user service
@@ -19,12 +19,13 @@ export class ListItemComponent implements OnInit {
   ngOnInit() {
   }
 
-  deleteItem(id: number) {
-    this.deleteItemById.emit(id);
+  deleteItem(listItem: ListItem) {
+    this.deleteItemById.emit(listItem);
   }
 
   saveItem(item: ListItem) {
     this.updateItem.emit(item);
+    return item.editMode = !item.editMode;
   }
 
   editItem(item: ListItem) {

@@ -43,18 +43,22 @@
   border: 1px solid #f98700;
 }
 
-.textarea {
+.description-editmode {
   margin-top: 10px;
   min-block-size: 30px;
   min-inline-size: 100%;
 }
 
-label {
-  display: inline-block;
-  text-align: right;
-  width: 20%;
+/*input {
+    margin: .4rem;
+}*/
+
+.title-editmode {
+  margin-top: -10px;
+  min-width: 400px;
 }
 
-input {
-    margin: .4rem;
+.date-editmode {
+  min-width: 230px;
+  margin-left: 5px;
 }
