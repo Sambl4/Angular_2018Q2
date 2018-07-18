@@ -16,7 +16,7 @@ export class AuthorizationService {
   constructor() { }
 
   Login(options) {
-    if(options.userMail && options.userPass &&
+    if (options.userMail && options.userPass &&
       options.userMail === this.authInfo.userMail &&
       options.userPass === this.authInfo.userPass) {
         this.setTokenToStorage(this.generateToken());

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { Router } from '@angular/router';
+
 import { AuthorizationService } from '../authorization.service';
 
 @Component({
@@ -11,13 +13,14 @@ export class AuthorizationComponent implements OnInit {
   public needRegister: boolean;
   public userExist: boolean;
   public validated: boolean;
+  public goBack: any;
   public authOptions: {
     userMail: string;
     userName: string,
     userPass: string,
     userConfirmPass: string,
-  }
-  constructor(private authorizationService: AuthorizationService) { }
+  };
+  constructor(private authorizationService: AuthorizationService, private router: Router) { }
 
   ngOnInit() {
     this.needRegister = false;
@@ -26,14 +29,15 @@ export class AuthorizationComponent implements OnInit {
       userName: null,
       userPass: null,
       userConfirmPass: null,
-    }
+    };
   }
 
   login() {
-    if( this.authOptions && this.authOptions.userMail && this.authOptions.userPass) {
+    if (this.authOptions && this.authOptions.userMail && this.authOptions.userPass) {
       this.userExist = this.authorizationService.Login(this.authOptions);
-      this.validated = true;
       console.log('logged in successfully');
+      this.validated = true;
+      this.router.navigate(['../coursesList']);
     } else {
       this.validated = false;
     }
