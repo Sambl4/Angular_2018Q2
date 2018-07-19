@@ -10,6 +10,7 @@ import { AuthorizationService } from '../authorization.service';
   styleUrls: ['./authorization.component.css']
 })
 export class AuthorizationComponent implements OnInit {
+
   public needRegister: boolean;
   public userExist: boolean;
   public validated: boolean;
@@ -35,11 +36,13 @@ export class AuthorizationComponent implements OnInit {
   login() {
     if (this.authOptions && this.authOptions.userMail && this.authOptions.userPass) {
       this.userExist = this.authorizationService.Login(this.authOptions);
-      console.log('logged in successfully');
+        if(this.userExist) {
+          console.log('logged in successfully');
+          this.router.navigate(['../coursesList']);
+          // this.validated = true;
+          return;
+        }
       this.validated = true;
-      this.router.navigate(['../coursesList']);
-    } else {
-      this.validated = false;
     }
   }
 

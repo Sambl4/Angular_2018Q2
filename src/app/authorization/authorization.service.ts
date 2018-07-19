@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
 
+import { Observable, BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthorizationService {
+  private _isAuthenticated = new BehaviorSubject<boolean>(false);
+  public isAuthenticated = this._isAuthenticated.asObservable();
+
   private authInfo = {
     userMail: 'qwerty@gmail.com',
     userName: 'Qwerty',
     userPass: '123',
     token: '57fake78Token43forQwerty21User'
   };
-  private isAuthenticated: boolean;
 
   constructor() { }
 
@@ -20,23 +23,23 @@ export class AuthorizationService {
       options.userMail === this.authInfo.userMail &&
       options.userPass === this.authInfo.userPass) {
         this.setTokenToStorage(this.generateToken());
-        this.isAuthenticated = true;
+        this._isAuthenticated.next(true);
         return true;
     } else {
-      this.isAuthenticated = false;
+      this._isAuthenticated.next(false);
       return false;
     }
   }
 
   Logout() {
-    this.isAuthenticated = false;
+    this._isAuthenticated.next(false);
     this.removeTokenFromStorage();
   }
 
-  IsAuthenticated(): boolean {
-    this.isAuthenticated = this.getTokenFromStorage() === this.GetUserInfo().token ?
-      this.isAuthenticated = true :
-      this.isAuthenticated = false;
+  IsAuthenticated() {
+    this.getTokenFromStorage() === this.GetUserInfo().token ?
+      this._isAuthenticated.next(true) :
+      this._isAuthenticated.next(false);
     return this.isAuthenticated;
   }
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import * as _ from 'lodash';
 import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
@@ -7,21 +7,13 @@ import { Router, NavigationEnd } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  constructor(private router: Router) {
-    // router.events.forEach((event) => {
-    //   if (event instanceof NavigationEnd) {
-    //   }
-    //   console.log(event.NavigationEnd);
-    //   console.log(NavigationEnd);
-    //   // NavigationEnd
-    //   // NavigationCancel
-    //   // NavigationError
-    //   // RoutesRecognized
-    // });
 
-    // this.router.events.forEach(event => event instanceof NavigationEnd).subscribe((event: NavigationEnd) => {
-    //   // You only receive NavigationStart events
-    // });
-  }
+export class AppComponent {
+  public isAuthPath: boolean;
+  constructor(private router: Router) {
+    router.events.forEach(event => {
+      if (event instanceof NavigationEnd) {
+        this.isAuthPath = event.url === '/authorization';
+        }});
+    };
 }

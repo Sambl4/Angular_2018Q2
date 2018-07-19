@@ -14,3 +14,7 @@
 .userNotExist.validated {
   border: 1px solid red;
 }
+
+.form-group {
+  margin-top: 20px;
+}
