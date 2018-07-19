@@ -2,22 +2,41 @@
 <div>
   <div class="form-group">
     <h5>Email address</h5>
-    <input type="email" class="form-control" [ngClass]="{'userNotExist' : !userExist, 'userExist' : userExist, 'validated' : validated}" aria-describedby="emailHelp" placeholder="Enter email" [(ngModel)]="authOptions.userMail">
+    <div *ngIf="emailExists" class="incorrectData">This email already exists!</div>
+    <input type="email"
+          class="form-control"
+          [ngClass]="{'isNotValid' : !isValid, 'isValid' : isValid, 'isValidated' : isValidated}"aria-describedby="emailHelp"
+          placeholder="Enter email"
+          [(ngModel)]="authOptions.userMail">
   </div>
   <div *ngIf="needRegister" class="form-group">
     <h5>User name</h5>
-    <input type="text" class="form-control" placeholder="Enter name" [(ngModel)]="authOptions.userName">
+    <input type="text"
+          class="form-control"
+          placeholder="Enter name"
+          [(ngModel)]="authOptions.userName"
+          [ngClass]="{'isNotValid' : !isValid, 'isValid' : isValid, 'isValidated' : isValidated}">
   </div>
   <div class="form-group">
     <h5>Password</h5>
-    <input type="password" class="form-control" [ngClass]="{'userNotExist' : !userExist, 'userExist' : userExist, 'validated' : validated}" placeholder="Password" [(ngModel)]="authOptions.userPass">
+    <input type="password"
+          class="form-control"
+          [ngClass]="{'isNotValid' : !isValid, 'isValid' : isValid, 'isValidated' : isValidated}"
+          placeholder="Password"
+          [(ngModel)]="authOptions.userPass">
   </div>
   <div *ngIf="needRegister" class="form-group">
     <h5>Confirm password</h5>
-    <input type="password" class="form-control" placeholder="Password" [(ngModel)]="authOptions.userConfirmPass">
+    <input type="password"
+          class="form-control"
+          [ngClass]="{'isNotValid' : !isValid, 'isValid' : isValid, 'isValidated' : isValidated}"
+          placeholder="Password"
+          [(ngModel)]="authOptions.userConfirmPass">
   </div>
+  <div *ngIf="!passEqual" class="incorrectData">Passwords are not equal!</div>
   <div class="form-btns">
-    <button (click)="needRegister = !needRegister" class="btn btn-outline-info">Register</button>
+    <button *ngIf="!needRegister" (click)="needRegister = !needRegister" class="btn btn-outline-info">Register</button>
+    <button *ngIf="needRegister" (click)="registration()" class="btn btn-outline-info">Register</button>
     <button (click)="login()" class="btn btn-outline-success">LogIn</button>
   </div>
 </div>

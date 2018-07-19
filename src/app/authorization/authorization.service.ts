@@ -28,7 +28,7 @@ export class AuthorizationService {
     } else {
       this._isAuthenticated.next(false);
       return false;
-    }
+    };
   }
 
   Logout() {
@@ -61,5 +61,9 @@ export class AuthorizationService {
 
   getTokenFromStorage() {
     return localStorage.getItem('mytoken');
+  }
+
+  isEmailExist(email: string): boolean {
+    return email === this.authInfo.userMail;
   }
 }
