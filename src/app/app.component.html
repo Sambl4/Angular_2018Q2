@@ -1,13 +1,10 @@
-<div class="wrapper">
-  <app-header></app-header>
-  <app-breadcrumb></app-breadcrumb>
-  <main class="container">
-    <!-- <app-list></app-list> -->
+<main class="wrapper">
+  <!-- <app-list></app-list> -->
+  <app-header [isAuthPath]="isAuthPath">
+  </app-header>
+  <app-breadcrumb *ngIf="!isAuthPath"></app-breadcrumb>
+  <div class="container">
     <router-outlet></router-outlet>
-  </main>
-</div>
-
+  </div>
+</main>
 <app-footer></app-footer>
-
-
-

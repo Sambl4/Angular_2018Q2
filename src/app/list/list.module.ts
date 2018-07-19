@@ -8,12 +8,15 @@ import { SearchbarComponent } from './searchbar/searchbar.component';
 import { ListComponent } from './list/list.component';
 import { ListItemComponent } from './list-item/list-item.component';
 
+import { CoreModule } from '../core/core.module';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    ShareModule
+    ShareModule,
+    CoreModule
   ],
   declarations: [
     ListComponent,

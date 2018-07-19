@@ -12,6 +12,9 @@ import { ListService } from '../list.service';
 
 export class ListComponent implements OnInit {
   public listItems: ListItem[] = [];
+  public options: any;
+
+  private deletedID: number;
 
   constructor( private listService: ListService) { }
 
@@ -23,8 +26,24 @@ export class ListComponent implements OnInit {
     this.listItems = value;
   }
 
-  deleteItemById(id: number) {
-    console.log(id);
+  deleteItemById(listItem: ListItem) {
+    this.deletedID = listItem.id;
+    this.options = {
+      title: 'Delete course.',
+      message: 'Do you really want to delete ' + listItem.title + ' course? '
+    };
+  }
+
+  confirmResult(result: boolean) {
+    result ? this.listService.removeListItemById(this.deletedID) : null;
+  }
+
+  updateItem(item: ListItem) {
+    this.listService.updateItem(item);
+  }
+
+  addNewCourse() {
+    this.listService.createListItem();
   }
 
   loadMore() {

@@ -1,13 +1,15 @@
+<app-modal [options]="options" (confirmResult)="confirmResult($event)"></app-modal>
 <div>
-    <div class="searchbar">
-      <app-searchbar (filteredArray)="filteredArray($event)"></app-searchbar>
-      <button class="btn btn-outline-success my-1">Add new Course</button>
-    </div>
+  <div class="searchbar">
+    <app-searchbar (filteredArray)="filteredArray($event)"></app-searchbar>
+    <button (click)="addNewCourse()" class="btn btn-outline-success my-1">Add new Course</button>
+  </div>
   <div *ngIf="listItems.length">
     <app-list-item
           *ngFor="let item of (listItems | orderBycreationDate)"
           [listItem]="item"
           (deleteItemById)="deleteItemById($event)"
+          (updateItem)="updateItem($event)"
           >
     </app-list-item>
     <button
@@ -16,5 +18,5 @@
     Load more
   </button>
   </div>
-  <button *ngIf="!listItems.length" class="btn btn-outline-success my-3 mr-sm-2 container">No data. Feel free to add new course</button>
+  <button *ngIf="!listItems.length" (click)="addNewCourse()" class="btn btn-outline-success my-3 mr-sm-2 container">No data. Feel free to add new course</button>
 </div>

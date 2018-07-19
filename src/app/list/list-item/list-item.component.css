@@ -38,3 +38,27 @@
 .my-rate {
   color: gold;
 }
+
+.editMode {
+  border: 1px solid #f98700;
+}
+
+.description-editmode {
+  margin-top: 10px;
+  min-block-size: 30px;
+  min-inline-size: 100%;
+}
+
+/*input {
+    margin: .4rem;
+}*/
+
+.title-editmode {
+  margin-top: -10px;
+  min-width: 400px;
+}
+
+.date-editmode {
+  min-width: 230px;
+  margin-left: 5px;
+}

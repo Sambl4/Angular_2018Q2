@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { FooterComponent } from './footer/footer.component';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   imports: [
@@ -14,12 +15,14 @@ import { FooterComponent } from './footer/footer.component';
   declarations: [
     HeaderComponent,
     BreadcrumbComponent,
-    FooterComponent
+    FooterComponent,
+    ModalComponent
   ],
   exports: [
     HeaderComponent,
     BreadcrumbComponent,
-    FooterComponent
+    FooterComponent,
+    ModalComponent
   ]
 })
 export class CoreModule { }
