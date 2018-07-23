@@ -7,22 +7,30 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { FooterComponent } from './footer/footer.component';
 import { ModalComponent } from './modal/modal.component';
 
+import { InfrastructureModule } from './infrastructure/infrastructure.module';
+// import { DateInputComponent } from './infrastructure/inputs/date-input/date-input.component';
+// import { DurationInputComponent } from './infrastructure/inputs/duration-input/duration-input.component';
+
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    InfrastructureModule
   ],
   declarations: [
     HeaderComponent,
     BreadcrumbComponent,
     FooterComponent,
-    ModalComponent
+    ModalComponent,
+    // DateInputComponent,
+    // DurationInputComponent
   ],
   exports: [
     HeaderComponent,
     BreadcrumbComponent,
     FooterComponent,
-    ModalComponent
+    ModalComponent,
+    InfrastructureModule
   ]
 })
 export class CoreModule { }

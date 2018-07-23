@@ -7,9 +7,9 @@ import { SearchbarComponent } from './searchbar/searchbar.component';
 
 import { ListComponent } from './list/list.component';
 import { ListItemComponent } from './list-item/list-item.component';
+import { AddItemComponent } from './add-item/add-item.component';
 
 import { CoreModule } from '../core/core.module';
-
 
 @NgModule({
   imports: [
@@ -22,10 +22,12 @@ import { CoreModule } from '../core/core.module';
     ListComponent,
     ListItemComponent,
     SearchbarComponent,
+    AddItemComponent,
   ],
   exports: [
     ListComponent,
-    SearchbarComponent
+    SearchbarComponent,
+    AddItemComponent
   ]
 })
 export class ListModule { }

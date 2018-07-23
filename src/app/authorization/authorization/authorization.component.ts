@@ -56,12 +56,12 @@ export class AuthorizationComponent implements OnInit {
     if (this.authOptions && this.authOptions.userMail && this.authOptions.userName &&
       this.authOptions.userPass && this.authOptions.userConfirmPass) {
 
-      this.emailExists = this.authorizationService.isEmailExist(this.authOptions.userMail);
-      // this.emailExists ? this.isValid = false : this.isValid = true;
+        this.emailExists = this.authorizationService.isEmailExist(this.authOptions.userMail);
+        // this.emailExists ? this.isValid = false : this.isValid = true;
 
-      this.passEqual = this.authOptions.userPass === this.authOptions.userConfirmPass;
-      // this.passEqual ? this.isValid = true : this.isValid = false;
-      // if (this.emailExists && this.authOptions.userPass === this.authOptions.userConfirmPass) {
+        this.passEqual = this.authOptions.userPass === this.authOptions.userConfirmPass;
+        // this.passEqual ? this.isValid = true : this.isValid = false;
+        // if (this.emailExists && this.authOptions.userPass === this.authOptions.userConfirmPass) {
       if (!this.emailExists && this.passEqual) {
         console.log('registred')
         this.passEqual = true;

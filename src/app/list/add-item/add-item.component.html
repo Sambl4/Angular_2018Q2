@@ -1,0 +1,30 @@
+<div class="card-main-section">
+  <div class="card-header">
+    <h4 class="card-title">
+      <input class="title-editmode"
+            placeholder="Put the title"
+            [(ngModel)]="listItem.title">
+    </h4>
+    <section  >
+      <!-- <div>{{listItem.duration | durationFormat: listItem.duration}}</div> -->
+      <div class="card-header-info">
+        <app-duration-input [inputData]="listItem.duration"></app-duration-input>
+      <!-- <input class="date-editmode" placeholder="Put release date yyyy.mm.dd" [(ngModel)]="listItem.date"> -->
+        <app-date-input class="date-editmode" [inputData]="listItem.date"></app-date-input>
+      </div>
+    </section>
+  </div>
+  <div class='card-description' >
+    <textarea class="description-editmode"
+        placeholder="Put the release date"
+        [(ngModel)]="listItem.description">
+    </textarea>
+  </div>
+  <div class='card-authors'>
+    <app-multi-input></app-multi-input>
+  </div>
+</div>
+<section class="card-control-section btn-group-vertical">
+  <button (click)="saveEdit(listItem)" class="btn btn-outline-success">Save</button>
+  <button (click)="cancelEdit(listItem)" class="btn btn-outline-danger">Cancel</button>
+</section>
