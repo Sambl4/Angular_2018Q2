@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter,
-        ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { Subscription } from 'rxjs'
+        ChangeDetectionStrategy } from '@angular/core';
+import { cloneDeep } from 'lodash';
 
 import { ListItem } from '../../model/list-item.model';
 import { AddItemComponent } from '../add-item/add-item.component';
@@ -18,7 +18,7 @@ export class ListItemComponent implements OnInit {
   @Output() updateItem: EventEmitter<ListItem> = new EventEmitter<ListItem>();
 
   public isMyRate = false; // will be received from user service
-  constructor(private cd: ChangeDetectorRef) { }
+  constructor() { }
 
   ngOnInit() {
   }
@@ -28,23 +28,24 @@ export class ListItemComponent implements OnInit {
   }
 
   saveEditItem(item: ListItem) {
-    this.updateItem.emit(item);
-    item.editMode = !item.editMode;
+    const editModeItem: ListItem = cloneDeep(item);
+    this.updateItem.emit(editModeItem);
+    editModeItem.editMode = !this.listItem.editMode;
+    this.listItem = editModeItem;
   }
 
   editItem(item: ListItem) {
-    item.editMode = !item.editMode;
+    const editModeItem: ListItem = cloneDeep(item);
+    editModeItem.editMode = !this.listItem.editMode;
+    this.listItem = editModeItem;
   }
 
   cancelEditItem(item: ListItem) {
-    if(!item.title && !item.description) {
+    if (!item.title && !item.description) {
       this.deleteItem(item);
     }
-    item.editMode = !item.editMode;
-    // this.refresh();
-  }
-
-  refresh() {
-    this.cd.detectChanges();
+    const editModeItem: ListItem = cloneDeep(item);
+    editModeItem.editMode = !this.listItem.editMode;
+    this.listItem = editModeItem;
   }
 }

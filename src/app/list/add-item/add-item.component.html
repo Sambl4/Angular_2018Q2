@@ -6,10 +6,8 @@
             [(ngModel)]="listItem.title">
     </h4>
     <section  >
-      <!-- <div>{{listItem.duration | durationFormat: listItem.duration}}</div> -->
       <div class="card-header-info">
-        <app-duration-input [inputData]="listItem.duration"></app-duration-input>
-      <!-- <input class="date-editmode" placeholder="Put release date yyyy.mm.dd" [(ngModel)]="listItem.date"> -->
+        <app-duration-input [inputData]="listItem.duration" (changedDate)="changedDuration($event)"></app-duration-input>
         <app-date-input class="date-editmode" [inputData]="listItem.date"></app-date-input>
       </div>
     </section>
