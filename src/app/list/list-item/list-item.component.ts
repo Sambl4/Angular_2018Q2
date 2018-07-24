@@ -28,10 +28,10 @@ export class ListItemComponent implements OnInit {
   }
 
   saveEditItem(item: ListItem) {
+    item.editMode = !item.editMode;
     const editModeItem: ListItem = cloneDeep(item);
-    this.updateItem.emit(editModeItem);
-    editModeItem.editMode = !this.listItem.editMode;
     this.listItem = editModeItem;
+    this.updateItem.emit(editModeItem);
   }
 
   editItem(item: ListItem) {

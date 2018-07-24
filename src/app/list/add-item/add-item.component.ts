@@ -28,4 +28,8 @@ export class AddItemComponent implements OnInit {
   changedDuration(duration: number) {
     this.listItem.duration = duration;
   }
+
+  changedDate(date: string) {
+    this.listItem.date = date;
+  }
 }
