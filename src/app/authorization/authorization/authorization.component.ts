@@ -36,20 +36,31 @@ export class AuthorizationComponent implements OnInit {
       userConfirmPass: null,
     };
   }
+  roles = ['Really Smart', 'Super Flexible', 'Weather Changer'];
 
-  login() {
-    if (this.authOptions && this.authOptions.userMail && this.authOptions.userPass) {
-      this.isValid = this.authorizationService.Login(this.authOptions);
-        if(this.isValid) {
-          console.log('logged in successfully');
-          this.router.navigate(['../coursesList']);
-          // this.isValidated = true;
-          return;
-        };
-    } else {
-      this.isValid = false;
-    };
-    this.isValidated = true;
+  user = {
+    email: 'Dr.',
+    name: '',
+    mainPass: 'Dr. What',
+    role: this.roles[0]
+  };
+
+  login(event: Event) {
+    // if (this.authOptions && this.authOptions.userMail && this.authOptions.userPass) {
+    //   this.isValid = this.authorizationService.Login(this.authOptions);
+    //     if(this.isValid) {
+    //       console.log('logged in successfully');
+    //       this.router.navigate(['../coursesList']);
+    //       // this.isValidated = true;
+    //       return;
+    //     };
+    // } else {
+    //   this.isValid = false;
+    // };
+    // this.isValidated = true;
+    // event.preventDefault();
+    // event.stopPropagation();
+    console.log(event)
   }
 
   registration() {
