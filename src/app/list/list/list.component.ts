@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import * as _ from 'lodash';
 import { ListItem } from '../../model/list-item.model';
 
 import { ListService } from '../list.service';
@@ -27,10 +27,11 @@ export class ListComponent implements OnInit {
   }
 
   deleteItemById(listItem: ListItem) {
+    const deletedTitle = listItem.title ? listItem.title : 'New';
     this.deletedID = listItem.id;
     this.options = {
       title: 'Delete course.',
-      message: 'Do you really want to delete ' + listItem.title + ' course? '
+      message: 'Do you really want to delete ' + deletedTitle + ' course? '
     };
   }
 

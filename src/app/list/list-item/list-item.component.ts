@@ -1,11 +1,15 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter,
+        ChangeDetectionStrategy } from '@angular/core';
+import { cloneDeep } from 'lodash';
 
 import { ListItem } from '../../model/list-item.model';
+import { AddItemComponent } from '../add-item/add-item.component';
 
 @Component({
   selector: 'app-list-item',
   templateUrl: './list-item.component.html',
-  styleUrls: ['./list-item.component.css']
+  styleUrls: ['./list-item.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class ListItemComponent implements OnInit {
@@ -19,16 +23,29 @@ export class ListItemComponent implements OnInit {
   ngOnInit() {
   }
 
-  deleteItem(listItem: ListItem) {
-    this.deleteItemById.emit(listItem);
+  deleteItem(Item: ListItem) {
+    this.deleteItemById.emit(Item);
   }
 
-  saveItem(item: ListItem) {
-    this.updateItem.emit(item);
-    return item.editMode = !item.editMode;
+  saveEditItem(item: ListItem) {
+    item.editMode = !item.editMode;
+    const editModeItem: ListItem = cloneDeep(item);
+    this.listItem = editModeItem;
+    this.updateItem.emit(editModeItem);
   }
 
   editItem(item: ListItem) {
-    return item.editMode = !item.editMode;
+    const editModeItem: ListItem = cloneDeep(item);
+    editModeItem.editMode = !this.listItem.editMode;
+    this.listItem = editModeItem;
+  }
+
+  cancelEditItem(item: ListItem) {
+    if (!item.title && !item.description) {
+      this.deleteItem(item);
+    }
+    const editModeItem: ListItem = cloneDeep(item);
+    editModeItem.editMode = !this.listItem.editMode;
+    this.listItem = editModeItem;
   }
 }

@@ -12,8 +12,10 @@ import { AuthorizationService } from '../authorization.service';
 export class AuthorizationComponent implements OnInit {
 
   public needRegister: boolean;
-  public userExist: boolean;
-  public validated: boolean;
+  public isValid: boolean;
+  public isValidated: boolean;
+  public emailExists: boolean;
+  public passEqual: boolean;
   public goBack: any;
   public authOptions: {
     userMail: string;
@@ -25,6 +27,8 @@ export class AuthorizationComponent implements OnInit {
 
   ngOnInit() {
     this.needRegister = false;
+    this.passEqual = true;
+    this.emailExists = false;
     this.authOptions = {
       userMail: null,
       userName: null,
@@ -35,15 +39,41 @@ export class AuthorizationComponent implements OnInit {
 
   login() {
     if (this.authOptions && this.authOptions.userMail && this.authOptions.userPass) {
-      this.userExist = this.authorizationService.Login(this.authOptions);
-        if(this.userExist) {
+      this.isValid = this.authorizationService.Login(this.authOptions);
+        if(this.isValid) {
           console.log('logged in successfully');
           this.router.navigate(['../coursesList']);
-          // this.validated = true;
+          // this.isValidated = true;
           return;
-        }
-      this.validated = true;
+        };
+    } else {
+      this.isValid = false;
+    };
+    this.isValidated = true;
+  }
+
+  registration() {
+    if (this.authOptions && this.authOptions.userMail && this.authOptions.userName &&
+      this.authOptions.userPass && this.authOptions.userConfirmPass) {
+
+        this.emailExists = this.authorizationService.isEmailExist(this.authOptions.userMail);
+        // this.emailExists ? this.isValid = false : this.isValid = true;
+
+        this.passEqual = this.authOptions.userPass === this.authOptions.userConfirmPass;
+        // this.passEqual ? this.isValid = true : this.isValid = false;
+        // if (this.emailExists && this.authOptions.userPass === this.authOptions.userConfirmPass) {
+      if (!this.emailExists && this.passEqual) {
+        console.log('registred')
+        this.passEqual = true;
+        this.isValid = true;
+      } else {
+        this.passEqual = false;
+        this.isValid = false;
+      }
+    } else {
+      this.isValid = false;
     }
+    this.isValidated = true;
   }
 
 }

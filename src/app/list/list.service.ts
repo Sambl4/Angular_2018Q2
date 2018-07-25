@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 
 import { ListItem } from '../model/list-item.model';
 
-const originalListItems:  ListItem[] = [
+let originalListItems:  ListItem[] = [
   {
     id: 1,
     title: 'Title 1',
@@ -85,11 +85,8 @@ export class ListService {
   }
 
   public updateItem(item: ListItem) {
-    let updatedItem: ListItem = this.getListItemById(item.id);
-
-    item.date = item.date;
-
-    updatedItem = item;
+    let updatedItemIndex: number = this.getListItemById(item.id);
+    originalListItems[updatedItemIndex] = item;
   }
 
   public removeListItemById(id: number) {
@@ -97,7 +94,7 @@ export class ListService {
   }
 
   private getListItemById(id: number) {
-    return _.find(originalListItems, {id: id});
+    return _.findIndex(originalListItems, {id: id});
   }
 
   private generateNewItem() {
