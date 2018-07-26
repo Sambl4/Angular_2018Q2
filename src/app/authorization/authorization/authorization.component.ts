@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthorizationService } from '../authorization.service';
+import { User } from '../../model/user.model';
 
 @Component({
   selector: 'app-authorization',
@@ -23,6 +24,17 @@ export class AuthorizationComponent implements OnInit {
     userPass: string,
     userConfirmPass: string,
   };
+
+  public confirmPass: boolean;
+  public roles = ['User', 'Manager'];
+  public user: User = {
+      id: Date.now(),
+      email: '',
+      firstName: '',
+      lastName: '',
+      pass: '',
+      role: this.roles[0]
+    };
   constructor(private authorizationService: AuthorizationService, private router: Router) { }
 
   ngOnInit() {
@@ -35,17 +47,26 @@ export class AuthorizationComponent implements OnInit {
       userPass: null,
       userConfirmPass: null,
     };
+
+
   }
-  roles = ['Really Smart', 'Super Flexible', 'Weather Changer'];
 
-  user = {
-    email: 'Dr.',
-    name: '',
-    mainPass: 'Dr. What',
-    role: this.roles[0]
-  };
+  // user = {
 
-  login(event: Event) {
+  //   email: '',
+  //   name: '',
+  //   pass: '',
+  //   role: this.roles[0]
+  // };
+
+  check(value) {
+    console.log(value.controls.email.status)
+    this.user.email ? value.controls.email.status = 'VALID' :
+          value.controls.email.status = 'INVALID'
+    console.log(value)
+  }
+
+  login() {
     // if (this.authOptions && this.authOptions.userMail && this.authOptions.userPass) {
     //   this.isValid = this.authorizationService.Login(this.authOptions);
     //     if(this.isValid) {
@@ -60,7 +81,7 @@ export class AuthorizationComponent implements OnInit {
     // this.isValidated = true;
     // event.preventDefault();
     // event.stopPropagation();
-    console.log(event)
+    console.log(this.user)
   }
 
   registration() {
