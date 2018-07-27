@@ -5,13 +5,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AuthorizationComponent } from './authorization/authorization.component';
 import { ShareModule } from '../share/share.module';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
     ShareModule,
-    FormsModule
+    FormsModule,
+    CoreModule
   ],
   declarations: [
     AuthorizationComponent

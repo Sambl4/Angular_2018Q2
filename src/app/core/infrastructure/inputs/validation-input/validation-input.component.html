@@ -1,0 +1,23 @@
+<div [formGroup]="form" class="form-group">
+  <!-- <label [attr.for]="property">{{inputTitle}}</label> -->
+  <!-- <input [id]="property" formControlName="property" class="form-control"
+        required minlength="4"
+        [(ngModel)]="property"> -->
+
+        <input formControlName="first" placeholder="First name">
+        <!-- <input formControlName="last" placeholder="Last name"> -->
+
+  <!-- <div *ngIf="property.invalid && (property.dirty || property.touched)"
+      class="alert alert-danger">
+
+    <div *ngIf="property.errors.required">
+      {{property}} is required.
+    </div>
+    <div *ngIf="property.errors.minlength">
+      {{property}} must be at least 4 characters long.
+    </div>
+
+  </div> -->
+  <!-- <button (click)="click(property)">prop</button> -->
+  <button (click)="setValue()">set</button>
+</div>

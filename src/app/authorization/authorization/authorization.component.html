@@ -41,9 +41,18 @@
   </div>
 </div> -->
 
+<form>
+  <app-validation-input [inputTitle]="'myTitle'" [property]="'question'" [options]="'form'"></app-validation-input>
+  <div class="form-row">
+    <button type="submit" >Save</button>
+  </div>
+</form>
+
 <form #authForm="ngForm" [class.cross-validation-error]="authForm.valid">
   <!-- <div [hidden]="authForm.submitted"> -->
     <div class="cross-validation" [class.cross-validation-error]="authForm.errors?.identityRevealed && (authForm.touched || authForm.dirty)">
+<!-- input component -->
+      <app-validation-input [inputTitle]="'myTitle'"></app-validation-input>
 <!-- User email -->
       <div class="form-group">
         <label for="email">User email</label>
