@@ -1,15 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 
+import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+
 import { Router } from '@angular/router';
 
 import { AuthorizationService } from '../authorization.service';
 import { User } from '../../model/user.model';
 
+interface existsUser {
+  email: string;
+  pass: string;
+}
+
 @Component({
   selector: 'app-authorization',
   templateUrl: './authorization.component.html',
-  styleUrls: ['./authorization.component.css']
+  styleUrls: ['./authorization.component.css'],
 })
+
 export class AuthorizationComponent implements OnInit {
 
   public needRegister: boolean;
@@ -35,10 +43,41 @@ export class AuthorizationComponent implements OnInit {
       pass: '',
       role: this.roles[0]
     };
-  constructor(private authorizationService: AuthorizationService, private router: Router) { }
+  public isRegistred: boolean;
+  // private form = new FormGroup({
+  //   firstName: new FormControl(),
+  //   lastName: new FormControl(),
+  //   email: new FormControl(),
+  //   pass: new FormControl(),
+  //   passCheking: new FormControl(),
+  //   role: new FormControl(),
+  // });
+  private form: FormGroup;
+  private loginForm: FormGroup;
+  constructor(private authorizationService: AuthorizationService,
+              private router: Router,
+              private formBuilder: FormBuilder) {
+     this.form = this.formBuilder.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      pass: ['', Validators.required],
+      passCheking: ['', [ Validators.required, Validators.minLength(4)]],
+      role: ''
+    })
+
+    this.loginForm = this.formBuilder.group({
+      email: ['', Validators.required],
+      pass: ['', Validators.required]
+    })
+  }
 
   ngOnInit() {
     this.needRegister = false;
+    this.isRegistred = false;
+
+
+
     this.passEqual = true;
     this.emailExists = false;
     this.authOptions = {

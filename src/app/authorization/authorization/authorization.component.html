@@ -41,17 +41,17 @@
   </div>
 </div> -->
 
-<form #authForm="ngForm" [class.cross-validation-error]="authForm.valid">
+<!-- <form #authForm="ngForm" [class.cross-validation-error]="authForm.valid"> -->
   <!-- <div [hidden]="authForm.submitted"> -->
-    <div class="cross-validation" [class.cross-validation-error]="authForm.errors?.identityRevealed && (authForm.touched || authForm.dirty)">
+<!--     <div class="cross-validation" [class.cross-validation-error]="authForm.errors?.identityRevealed && (authForm.touched || authForm.dirty)"> -->
 <!-- User email -->
-      <div class="form-group">
+    <!--   <div class="form-group">
         <label for="email">User email</label>
         <input id="email" class="form-control"
               name="email" [(ngModel)]="user.email" >
-      </div>
+      </div> -->
 <!-- User name -->
-      <div class="form-group" *ngIf="needRegister">
+     <!--  <div class="form-group" *ngIf="needRegister">
         <label for="name">User name</label>
         <input id="name" name="name" class="form-control"
               required minlength="4"
@@ -68,9 +68,9 @@
           </div>
 
         </div>
-      </div>
+      </div> -->
 <!-- User role -->
-      <div class="form-group" *ngIf="needRegister">
+    <!--   <div class="form-group" *ngIf="needRegister">
         <label for="role">User role</label>
         <select id="role" name="role" class="form-control"
             required [(ngModel)]="user.role" #role="ngModel" >
@@ -80,9 +80,9 @@
         <div *ngIf="role.errors && role.touched" class="alert alert-danger">
           <div *ngIf="role.errors.required">role is required.</div>
         </div>
-      </div>
+      </div> -->
 <!-- User password -->
-      <div class="form-group">
+     <!--  <div class="form-group">
         <label for="pass">User password</label>
         <input id="pass" name="pass" class="form-control"
               required
@@ -96,9 +96,9 @@
           </div>
 
         </div>
-      </div>
+      </div> -->
 <!-- Confirm pass -->
-      <div class="form-group" *ngIf="needRegister">
+      <!-- <div class="form-group" *ngIf="needRegister">
         <label for="confirmPass">Confirm password</label>
         <input id="confirmPass" name="confirmPass" class="form-control"
               required minlength="4"
@@ -120,7 +120,7 @@
       <div *ngIf="authForm.errors?.identityRevealed && (authForm.touched || authForm.dirty)" class="cross-validation-error-message alert alert-danger">
           Name cannot match alter ego.
       </div>
-    </div>
+    </div> -->
 
     <!-- <div class="form-group" *ngIf="needRegister">
       <label for="role">User role</label>
@@ -134,16 +134,83 @@
       </div>
     </div> -->
 
-    <button class="btn btn-default"
+   <!--  <button class="btn btn-default"
             [disabled]="authForm.invalid" (click)="login()">Login</button>
     <button type="button" class="btn btn-default"
             (click)="authForm.resetForm({})">Reset</button>
     <button type="button" class="btn btn-default"
-            (click)="check(authForm)">Check</button>
+            (click)="check(authForm)">Check</button> -->
   <!-- </div> -->
 
   <!-- <div class="submitted-message" *ngIf="authForm.submitted">
     <p>You've submitted your user, {{ authForm.value.name }}!</p>
     <button (click)="authForm.resetForm({})">Add new user</button>
   </div> -->
+<!-- </form> -->
+<form [formGroup]="loginForm" *ngIf="!needRegister">
+  <div class="form-group">
+        <label for="email">User email</label>
+        <input id="email" class="form-control"
+               formControlName="email" [(ngModel)]="user.email"  >
+  </div>
+  <div class="form-group">
+        <label for="pass">User password</label>
+        <input id="pass" class="form-control"
+               formControlName="pass" [(ngModel)]="user.pass"  >
+  </div>
+
+  <div class="form-btns">
+    <button *ngIf="!needRegister" (click)="needRegister = !needRegister" class="btn btn-outline-info">Register</button>
+    <button (click)="login()" [disabled]="loginForm.invalid" class="btn btn-outline-success">LogIn</button>
+  </div>
 </form>
+
+<form [formGroup]="form" *ngIf="needRegister">
+  <div class="form-group">
+        <label for="firstName">First name</label>
+        <input id="firstName" class="form-control"
+               formControlName="firstName" [(ngModel)]="user.firstName" >
+  </div>
+  <div class="form-group">
+        <label for="lastName">Last name</label>
+        <input id="lastName" class="form-control"
+               formControlName="lastName" [(ngModel)]="user.lastName"  >
+  </div>
+  <div class="form-group">
+        <label for="email">User email</label>
+        <input id="email" class="form-control"
+               formControlName="email" [(ngModel)]="user.email"  >
+  </div>
+  <div class="form-group">
+        <label for="pass">User password</label>
+        <input id="pass" class="form-control"
+               formControlName="pass" [(ngModel)]="user.pass"  >
+  </div>
+  <div class="form-group">
+        <label for="passCheking">Confirm password</label>
+        <input id="passCheking" class="form-control"
+               formControlName="passCheking" [(ngModel)]="user.passCheking"  >
+  </div>
+  <div class="form-group">
+    <label for="role">User role</label>
+    <select  formControlName="role" [(ngModel)]="user.role" class="form-control">
+      <option *ngFor="let role of roles">{{role}}</option>
+    </select>
+  </div>
+
+  <div class="form-btns">
+    <button *ngIf="needRegister" [disabled]="form.invalid" (click)="registration()" class="btn btn-outline-info">Register</button>
+    <button (click)="login()"  class="btn btn-outline-success">LogIn</button>
+  </div>
+  <!-- [disabled]="!isRegistred" -->
+</form>
+
+<div *ngIf="needRegister">{{form.value | json}}</div>
+<div *ngIf="needRegister">{{form.status}}</div>
+<div *ngIf="!needRegister">{{loginForm.value | json}}</div>
+<div *ngIf="!needRegister">{{loginForm.status}}</div>
+<!--
+<select id="role" name="role" class="form-control"
+            required [(ngModel)]="user.role" #role="ngModel" >
+          <option *ngFor="let p of roles" [value]="p">{{p}}</option>
+        </select> -->
