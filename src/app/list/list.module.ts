@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ShareModule } from '../share/share.module';
+import { RouterModule } from '@angular/router';
 
 import { SearchbarComponent } from './searchbar/searchbar.component';
 
@@ -16,7 +17,8 @@ import { CoreModule } from '../core/core.module';
     CommonModule,
     FormsModule,
     ShareModule,
-    CoreModule
+    CoreModule,
+    RouterModule
   ],
   declarations: [
     ListComponent,

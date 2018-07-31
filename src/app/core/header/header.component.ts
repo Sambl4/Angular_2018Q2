@@ -10,7 +10,7 @@ import { AuthorizationService } from '../../authorization/authorization.service'
 
 
 export class HeaderComponent implements OnInit, OnDestroy {
-@Input() public isAuthPath: boolean;
+@Input() public hideByUrl: boolean;
   public userName: string;
   public subscription: Subscription;
 
@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   isAuthenticatedDetect(state: boolean) {
-    console.log('state', state)
+    console.log('state', state);
   }
 
   logout() {

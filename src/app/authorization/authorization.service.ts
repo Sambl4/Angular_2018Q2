@@ -47,7 +47,7 @@ export class AuthorizationService {
     } else {
       this._isAuthenticated.next(false);
       return false;
-    };
+    }
   }
 
   Logout() {
@@ -84,7 +84,7 @@ export class AuthorizationService {
   }
 
   isEmailExist(user: User): boolean {
-    return _.findIndex(this.users, {email : user.email}) != -1;
+    return _.findIndex(this.users, {email : user.email}) !== -1;
   }
 
   registerNewUser(user: User) {

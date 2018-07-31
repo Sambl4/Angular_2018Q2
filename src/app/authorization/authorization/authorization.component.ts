@@ -7,11 +7,6 @@ import { Router } from '@angular/router';
 import { AuthorizationService } from '../authorization.service';
 import { User } from '../../model/user.model';
 
-interface existsUser {
-  email: string;
-  pass: string;
-}
-
 @Component({
   selector: 'app-authorization',
   templateUrl: './authorization.component.html',
@@ -51,12 +46,12 @@ export class AuthorizationComponent implements OnInit {
       pass: ['', [Validators.required, Validators.minLength(4)]],
       passCheking: ['', [Validators.required, Validators.minLength(4)]],
       role: ''
-    })
+    });
 
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
       pass: ['', [Validators.required, Validators.minLength(4)]]
-    })
+    });
   }
 
   ngOnInit() {
@@ -69,7 +64,7 @@ export class AuthorizationComponent implements OnInit {
   }
 
   login() {
-    this.isAuthenticated = this.authorizationService.Login(this.user)
+    this.isAuthenticated = this.authorizationService.Login(this.user);
     if (this.isAuthenticated) {
       console.log('logged in successfully');
       this.router.navigate(['../coursesList']);
@@ -81,7 +76,7 @@ export class AuthorizationComponent implements OnInit {
     this.emailExists = this.authorizationService.isEmailExist(this.user);
     this.submitted = true;
 
-    if(!this.emailExists) {
+    if (!this.emailExists) {
       this.authorizationService.registerNewUser(this.user);
       this.isRegistred = true;
     }

@@ -92,6 +92,12 @@
             "check-separator",
             "check-type"
         ],
-        "linebreak-style": [true, "CRLF"]
+        "linebreak-style": [{
+            "type": "string",
+            "enum": [
+              "LF",
+              "CRLF"
+            ]
+          }]
     }
 }

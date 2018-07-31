@@ -8,8 +8,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ModalComponent } from './modal/modal.component';
 
 import { InfrastructureModule } from './infrastructure/infrastructure.module';
-// import { DateInputComponent } from './infrastructure/inputs/date-input/date-input.component';
-// import { DurationInputComponent } from './infrastructure/inputs/duration-input/duration-input.component';
+import { NocontentComponent } from './nocontent/nocontent.component';
 
 @NgModule({
   imports: [
@@ -22,8 +21,7 @@ import { InfrastructureModule } from './infrastructure/infrastructure.module';
     BreadcrumbComponent,
     FooterComponent,
     ModalComponent,
-    // DateInputComponent,
-    // DurationInputComponent
+    NocontentComponent
   ],
   exports: [
     HeaderComponent,
