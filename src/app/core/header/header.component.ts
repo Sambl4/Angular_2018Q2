@@ -36,7 +36,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private isLoggedUpdate(result: boolean) {
     if (result) {
-      this.userName = this.authorizationService.GetUserInfo().userName;
+      const userInfo = this.authorizationService.GetUserInfo();
+      this.userName = userInfo.firstName + ' ' + userInfo.lastName;
     }
     this.isLogged = result;
   }

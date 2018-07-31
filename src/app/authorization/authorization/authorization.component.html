@@ -1,160 +1,12 @@
-<!-- <button class="btn btn-info" routerLink="../coursesList">Go back</button> -->
-<!-- <div>
-  <div class="form-group">
-    <h5>Email address</h5>
-    <div *ngIf="emailExists" class="incorrectData">This email already exists!</div>
-    <input type="email"
-          class="form-control"
-          [ngClass]="{'isNotValid' : !isValid, 'isValid' : isValid, 'isValidated' : isValidated}"aria-describedby="emailHelp"
-          placeholder="Enter email"
-          [(ngModel)]="authOptions.userMail">
-  </div>
-  <div *ngIf="needRegister" class="form-group">
-    <h5>User name</h5>
-    <input type="text"
-          class="form-control"
-          placeholder="Enter name"
-          [(ngModel)]="authOptions.userName"
-          [ngClass]="{'isNotValid' : !isValid, 'isValid' : isValid, 'isValidated' : isValidated}">
-  </div>
-  <div class="form-group">
-    <h5>Password</h5>
-    <input type="password"
-          class="form-control"
-          [ngClass]="{'isNotValid' : !isValid, 'isValid' : isValid, 'isValidated' : isValidated}"
-          placeholder="Password"
-          [(ngModel)]="authOptions.userPass">
-  </div>
-  <div *ngIf="needRegister" class="form-group">
-    <h5>Confirm password</h5>
-    <input type="password"
-          class="form-control"
-          [ngClass]="{'isNotValid' : !isValid, 'isValid' : isValid, 'isValidated' : isValidated}"
-          placeholder="Password"
-          [(ngModel)]="authOptions.userConfirmPass">
-  </div>
-  <div *ngIf="!passEqual" class="incorrectData">Passwords are not equal!</div>
-  <div class="form-btns">
-    <button *ngIf="!needRegister" (click)="needRegister = !needRegister" class="btn btn-outline-info">Register</button>
-    <button *ngIf="needRegister" (click)="registration()" class="btn btn-outline-info">Register</button>
-    <button (click)="login()" class="btn btn-outline-success">LogIn</button>
-  </div>
-</div> -->
-
-<!-- <form #authForm="ngForm" [class.cross-validation-error]="authForm.valid"> -->
-  <!-- <div [hidden]="authForm.submitted"> -->
-<!--     <div class="cross-validation" [class.cross-validation-error]="authForm.errors?.identityRevealed && (authForm.touched || authForm.dirty)"> -->
-<!-- User email -->
-    <!--   <div class="form-group">
-        <label for="email">User email</label>
-        <input id="email" class="form-control"
-              name="email" [(ngModel)]="user.email" >
-      </div> -->
-<!-- User name -->
-     <!--  <div class="form-group" *ngIf="needRegister">
-        <label for="name">User name</label>
-        <input id="name" name="name" class="form-control"
-              required minlength="4"
-              [(ngModel)]="user.name" #name="ngModel" >
-
-        <div *ngIf="name.invalid && (name.dirty || name.touched)"
-            class="alert alert-danger">
-
-          <div *ngIf="name.errors.required">
-            Name is required.
-          </div>
-          <div *ngIf="name.errors.minlength">
-            Name must be at least 4 characters long.
-          </div>
-
-        </div>
-      </div> -->
-<!-- User role -->
-    <!--   <div class="form-group" *ngIf="needRegister">
-        <label for="role">User role</label>
-        <select id="role" name="role" class="form-control"
-            required [(ngModel)]="user.role" #role="ngModel" >
-          <option *ngFor="let p of roles" [value]="p">{{p}}</option>
-        </select>
-
-        <div *ngIf="role.errors && role.touched" class="alert alert-danger">
-          <div *ngIf="role.errors.required">role is required.</div>
-        </div>
-      </div> -->
-<!-- User password -->
-     <!--  <div class="form-group">
-        <label for="pass">User password</label>
-        <input id="pass" name="pass" class="form-control"
-              required
-              [(ngModel)]="user.pass" #pass="ngModel" >
-
-        <div *ngIf="pass.invalid && (pass.dirty || pass.touched)"
-            class="alert alert-danger">
-
-          <div *ngIf="pass.errors.required">
-            Password is required.
-          </div>
-
-        </div>
-      </div> -->
-<!-- Confirm pass -->
-      <!-- <div class="form-group" *ngIf="needRegister">
-        <label for="confirmPass">Confirm password</label>
-        <input id="confirmPass" name="confirmPass" class="form-control"
-              required minlength="4"
-              [(ngModel)]="user.confirmPass" #confirmPass="ngModel" >
-
-        <div *ngIf="confirmPass.invalid && (confirmPass.dirty || confirmPass.touched)"
-            class="alert alert-danger">
-
-          <div *ngIf="confirmPass.errors.required">
-            Password is required.
-          </div>
-          <div *ngIf="confirmPass.errors.minlength">
-            Password must be at least 4 characters long.
-          </div>
-
-        </div>
-      </div>
-
-      <div *ngIf="authForm.errors?.identityRevealed && (authForm.touched || authForm.dirty)" class="cross-validation-error-message alert alert-danger">
-          Name cannot match alter ego.
-      </div>
-    </div> -->
-
-    <!-- <div class="form-group" *ngIf="needRegister">
-      <label for="role">User role</label>
-      <select id="role" name="role" class="form-control"
-              required [(ngModel)]="user.role" #role="ngModel" >
-        <option *ngFor="let p of roles" [value]="p">{{p}}</option>
-      </select>
-
-      <div *ngIf="role.errors && role.touched" class="alert alert-danger">
-        <div *ngIf="role.errors.required">role is required.</div>
-      </div>
-    </div> -->
-
-   <!--  <button class="btn btn-default"
-            [disabled]="authForm.invalid" (click)="login()">Login</button>
-    <button type="button" class="btn btn-default"
-            (click)="authForm.resetForm({})">Reset</button>
-    <button type="button" class="btn btn-default"
-            (click)="check(authForm)">Check</button> -->
-  <!-- </div> -->
-
-  <!-- <div class="submitted-message" *ngIf="authForm.submitted">
-    <p>You've submitted your user, {{ authForm.value.name }}!</p>
-    <button (click)="authForm.resetForm({})">Add new user</button>
-  </div> -->
-<!-- </form> -->
 <form [formGroup]="loginForm" *ngIf="!needRegister">
+  <div *ngIf="submitted && !isAuthenticated">User or password is not valid</div>
   <div class="form-group">
-        <label for="email">User email</label>
+        <label for="email">User email*</label>
         <input id="email" class="form-control"
                formControlName="email" [(ngModel)]="user.email"  >
   </div>
   <div class="form-group">
-        <label for="pass">User password</label>
+        <label for="pass">User password*</label>
         <input id="pass" class="form-control"
                formControlName="pass" [(ngModel)]="user.pass"  >
   </div>
@@ -163,31 +15,33 @@
     <button *ngIf="!needRegister" (click)="needRegister = !needRegister" class="btn btn-outline-info">Register</button>
     <button (click)="login()" [disabled]="loginForm.invalid" class="btn btn-outline-success">LogIn</button>
   </div>
+  <div>{{loginForm.status}}</div>
 </form>
 
 <form [formGroup]="form" *ngIf="needRegister">
   <div class="form-group">
-        <label for="firstName">First name</label>
+        <label for="firstName">First name*</label>
         <input id="firstName" class="form-control"
                formControlName="firstName" [(ngModel)]="user.firstName" >
   </div>
   <div class="form-group">
-        <label for="lastName">Last name</label>
+        <label for="lastName">Last name*</label>
         <input id="lastName" class="form-control"
                formControlName="lastName" [(ngModel)]="user.lastName"  >
   </div>
   <div class="form-group">
-        <label for="email">User email</label>
+        <label for="email">User email*</label>
         <input id="email" class="form-control"
                formControlName="email" [(ngModel)]="user.email"  >
+        <div *ngIf="emailExists && submitted">This email already exists</div>
   </div>
   <div class="form-group">
-        <label for="pass">User password</label>
+        <label for="pass">User password*</label>
         <input id="pass" class="form-control"
                formControlName="pass" [(ngModel)]="user.pass"  >
   </div>
   <div class="form-group">
-        <label for="passCheking">Confirm password</label>
+        <label for="passCheking">Confirm password* (at least 4 characters)</label>
         <input id="passCheking" class="form-control"
                formControlName="passCheking" [(ngModel)]="user.passCheking"  >
   </div>
@@ -199,18 +53,9 @@
   </div>
 
   <div class="form-btns">
-    <button *ngIf="needRegister" [disabled]="form.invalid" (click)="registration()" class="btn btn-outline-info">Register</button>
-    <button (click)="login()"  class="btn btn-outline-success">LogIn</button>
+    <button *ngIf="needRegister || !isRegistred" [disabled]="!(form.valid && (user.pass === user.passCheking))" (click)="registration()" class="btn btn-outline-info">Register</button>
+    <div *ngIf="isRegistred">User was registered</div>
+    <button (click)="login()" [disabled]="!isRegistred" class="btn btn-outline-success">LogIn</button>
   </div>
-  <!-- [disabled]="!isRegistred" -->
+  <div>{{form.status}}</div>
 </form>
-
-<div *ngIf="needRegister">{{form.value | json}}</div>
-<div *ngIf="needRegister">{{form.status}}</div>
-<div *ngIf="!needRegister">{{loginForm.value | json}}</div>
-<div *ngIf="!needRegister">{{loginForm.status}}</div>
-<!--
-<select id="role" name="role" class="form-control"
-            required [(ngModel)]="user.role" #role="ngModel" >
-          <option *ngFor="let p of roles" [value]="p">{{p}}</option>
-        </select> -->

@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 
+import * as _ from 'lodash';
+import { User } from '../model/user.model';
+
 import { Observable, BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
@@ -9,20 +12,36 @@ export class AuthorizationService {
   private _isAuthenticated = new BehaviorSubject<boolean>(false);
   public isAuthenticated = this._isAuthenticated.asObservable();
 
-  private authInfo = {
-    userMail: 'qwerty@gmail.com',
-    userName: 'Qwerty',
-    userPass: '123',
-    token: '57fake78Token43forQwerty21User'
-  };
+  private users: User[] = [
+  {
+    id: 1234567890,
+    email: 'user@gmail.com',
+    firstName: 'Test',
+    lastName: 'User',
+    pass: '1234',
+    role: 'User',
+    token: 'fake0987654321Tokenresu'
+  }];
+
+  private activeUser;
+  // private authInfo: User = {
+  //   id: 1234567890,
+  //   email: 'user@gmail.com',
+  //   firstName: 'Test',
+  //   lastName: 'User',
+  //   pass: '1234',
+  //   role: 'User',
+  //   token: 'fake0987654321Tokenresu'
+  // };
 
   constructor() { }
 
-  Login(options) {
-    if (options.userMail && options.userPass &&
-      options.userMail === this.authInfo.userMail &&
-      options.userPass === this.authInfo.userPass) {
-        this.setTokenToStorage(this.generateToken());
+  Login(user: User) {
+    const userIndex = this.getUserIndex(user);
+    if (userIndex >= 0 && user.email === this.users[userIndex].email &&
+        user.pass === this.users[userIndex].pass) {
+        this.setTokenToStorage(this.generateToken(user));
+        this.activeUser = this.users[userIndex];
         this._isAuthenticated.next(true);
         return true;
     } else {
@@ -44,11 +63,12 @@ export class AuthorizationService {
   }
 
   GetUserInfo() {
-    return this.authInfo;
+    return this.activeUser;
   }
 
-  generateToken() {
-    return this.authInfo.token;
+  generateToken(user: User) {
+    return 'fake' + user.id.toString().split('').reverse().join('') +
+          'token' + user.firstName.toLowerCase().split('').reverse().join('');
   }
 
   setTokenToStorage(token) {
@@ -63,7 +83,15 @@ export class AuthorizationService {
     return localStorage.getItem('mytoken');
   }
 
-  isEmailExist(email: string): boolean {
-    return email === this.authInfo.userMail;
+  isEmailExist(user: User): boolean {
+    return _.findIndex(this.users, {email : user.email}) != -1;
+  }
+
+  registerNewUser(user: User) {
+    this.users.push(user);
+  }
+
+  private getUserIndex(user: User) {
+    return _.findIndex(this.users, {email : user.email});
   }
 }
