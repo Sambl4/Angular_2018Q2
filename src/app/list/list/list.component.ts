@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import * as _ from 'lodash';
 import { ListItem } from '../../model/list-item.model';
 
@@ -13,13 +14,23 @@ import { ListService } from '../list.service';
 export class ListComponent implements OnInit {
   public listItems: ListItem[] = [];
   public options: any;
+  public routeParams: any = {};
 
   private deletedID: number;
 
-  constructor( private listService: ListService) { }
+  constructor( private listService: ListService,
+               private route: ActivatedRoute,
+               private router: Router) { }
 
   ngOnInit() {
     this.listItems = this.listService.getOriginalListItems();
+
+    // this.route.params.subscribe((data) => {
+    //   this.routeParams.id = item.id;
+    // });
+    this.route.data.subscribe((data) => {
+      console.log(data)
+    });
   }
 
   filteredArray(value: ListItem[]) {
@@ -45,10 +56,17 @@ export class ListComponent implements OnInit {
 
   addNewCourse() {
     this.listService.createListItem();
+    this.router.navigate(['../coursesList', 'new']);
   }
 
   loadMore() {
     console.log('load more items');
   }
 
+  setUrlParams(item: ListItem) {
+    // this.route.params.subscribe((data) => {
+    //   this.routeParams.id = item.id;
+    // })
+    this.router.navigate(['../coursesList', item.id]);
+  }
 }

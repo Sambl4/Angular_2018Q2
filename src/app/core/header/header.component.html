@@ -10,7 +10,7 @@
       </div>
       <div  *ngIf="isLogged" class="login-section">
         <div class="username">{{userName}}</div>
-        <button (click)="logout()" class="btn btn-light btn-logout">Logout</button>
+        <button (click)="logout()"  routerLink="../authorization" class="btn btn-light btn-logout">Logout</button>
       </div>
 
   </div>
