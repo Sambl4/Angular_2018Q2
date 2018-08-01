@@ -12,6 +12,9 @@ import { ListModule } from './list/list.module';
 import { HomeModule } from './home/home.module';
 import { AuthorizationModule } from './authorization/authorization.module';
 
+
+import { CanActivateList } from './list/canActivateList.guard';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -25,7 +28,9 @@ import { AuthorizationModule } from './authorization/authorization.module';
     AuthorizationModule,
     // ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    CanActivateList
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

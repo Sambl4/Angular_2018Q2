@@ -25,9 +25,9 @@ export class ListComponent implements OnInit {
   ngOnInit() {
     this.listItems = this.listService.getOriginalListItems();
 
-    // this.route.params.subscribe((data) => {
-    //   this.routeParams.id = item.id;
-    // });
+    this.route.params.subscribe((data) => {
+      this.routeParams.id = data['id'];
+    });
     this.route.data.subscribe((data) => {
       console.log(data)
     });
@@ -56,7 +56,7 @@ export class ListComponent implements OnInit {
 
   addNewCourse() {
     this.listService.createListItem();
-    this.router.navigate(['../coursesList', 'new']);
+    this.router.navigate(['../coursesList', 'new'], {queryParams: {itemId: 'new'}});
   }
 
   loadMore() {
@@ -64,9 +64,9 @@ export class ListComponent implements OnInit {
   }
 
   setUrlParams(item: ListItem) {
-    // this.route.params.subscribe((data) => {
-    //   this.routeParams.id = item.id;
-    // })
-    this.router.navigate(['../coursesList', item.id]);
+    this.route.params.subscribe((data) => {
+      this.routeParams.id = item.id;
+    })
+    this.router.navigate(['../coursesList', item.id], {queryParams: {itemId: item.id}});
   }
 }

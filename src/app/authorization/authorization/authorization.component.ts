@@ -20,7 +20,7 @@ export class AuthorizationComponent implements OnInit {
   public goBack: any;
 
   public confirmPass: boolean;
-  public roles = ['User', 'Manager'];
+  public roles = ['User', 'Admin'];
   public isAuthenticated: boolean;
   public submitted: boolean;
   public user: User = {
@@ -67,6 +67,7 @@ export class AuthorizationComponent implements OnInit {
     this.isAuthenticated = this.authorizationService.Login(this.user);
     if (this.isAuthenticated) {
       console.log('logged in successfully');
+      // this.router.navigate(['../coursesList'], extras: NavigationExtras = { skipLocationChange: false });
       this.router.navigate(['../coursesList']);
     }
     this.submitted = true;

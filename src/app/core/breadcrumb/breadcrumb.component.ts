@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ActivatedRouteSnapshot, Router, Params } from '@angular/router';
 
 @Component({
   selector: 'app-breadcrumb',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./breadcrumb.component.css']
 })
 export class BreadcrumbComponent implements OnInit {
+  private itemId: string;
   breadcrumbs: any[] = [
     {
       path: 'home',
@@ -16,9 +18,38 @@ export class BreadcrumbComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(private route: ActivatedRoute) {
+    // console.log(this.route)
+    // this.route.params.subscribe((data) => {
+    //   // let itemId = data['id'];
+    //   console.log(this.route);
+    //   console.log(data);
+    // })
+    // this.route.queryParams.subscribe((data) => {
+    //   console.log(data)
+    // })
+  }
 
   ngOnInit() {
+    //  this.route.params.subscribe((data) => {
+    //   let itemId = data['id'];
+      console.log(this.route);
+    //   console.log(data);
+    // })
+    this.route.queryParams.subscribe((data) => {
+      if (data['itemId'] && this.breadcrumbs.length >= 2) {
+        this.breadcrumbs.push( {
+          path: 'coursesList/id',
+          component: data['itemId']
+        })
+      } else if (this.breadcrumbs.length > 2) {
+        this.breadcrumbs.pop();
+      }
+
+      // data['itemId'] : null;
+      // console.log(this.route);
+      console.log(this.itemId);
+    })
   }
 
 }

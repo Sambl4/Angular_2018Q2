@@ -8,18 +8,21 @@ import { AuthorizationComponent } from './authorization/authorization/authorizat
 
 import { NocontentComponent } from './core/nocontent/nocontent.component';
 
+import { CanActivateList } from './list/canActivateList.guard';
+
 export const ROUTES: Route[] = [
   {
     path: 'coursesList',
     component: ListComponent,
-    data: {'auth_key': 'key'},
+    data: {'auth_key': ''},
     children: [{
       path: ':id',
       component: ListItemComponent
     }, {
       path: 'new',
       component: AddItemComponent
-    }]
+    }],
+    canActivate: [CanActivateList]
   },
   //  {
   //   path: 'coursesList/:id',

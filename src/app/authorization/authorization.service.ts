@@ -21,6 +21,14 @@ export class AuthorizationService {
     pass: '1234',
     role: 'User',
     token: 'fake0987654321Tokenresu'
+  }, {
+    id: 91234567890,
+    email: 'admin@gmail.com',
+    firstName: 'Test',
+    lastName: 'Admin',
+    pass: '1234',
+    role: 'Admin',
+    token: 'fake09876543219Tokennimda'
   }];
 
   private activeUser;
