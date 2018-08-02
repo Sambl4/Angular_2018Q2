@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 
+import { ActivatedRoute, ActivatedRouteSnapshot, Router, Params } from '@angular/router';
 import * as _ from 'lodash';
 import { User } from '../model/user.model';
 
@@ -32,17 +33,14 @@ export class AuthorizationService {
   }];
 
   private activeUser;
-  // private authInfo: User = {
-  //   id: 1234567890,
-  //   email: 'user@gmail.com',
-  //   firstName: 'Test',
-  //   lastName: 'User',
-  //   pass: '1234',
-  //   role: 'User',
-  //   token: 'fake0987654321Tokenresu'
-  // };
 
-  constructor() { }
+  constructor(private activatedRoute: ActivatedRoute, private router: Router) {
+    // this.activatedRoute.url.subscribe(url => console.log(url));
+    this.activatedRoute.data.subscribe((data) => {
+      // console.log(data);
+    });
+    console.log(this.router.url);
+   }
 
   Login(user: User) {
     const userIndex = this.getUserIndex(user);

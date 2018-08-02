@@ -7,8 +7,7 @@ import { ActivatedRoute, ActivatedRouteSnapshot, Router, Params } from '@angular
   styleUrls: ['./breadcrumb.component.css']
 })
 export class BreadcrumbComponent implements OnInit {
-  private itemId: string;
-  breadcrumbs: any[] = [
+  public breadcrumbs: any[] = [
     {
       path: 'home',
       component: 'Home'
@@ -17,6 +16,7 @@ export class BreadcrumbComponent implements OnInit {
       component: 'Courses List'
     }
   ];
+  private itemId: string;
 
   constructor(private route: ActivatedRoute) {
     // console.log(this.route)
@@ -33,7 +33,7 @@ export class BreadcrumbComponent implements OnInit {
   ngOnInit() {
     //  this.route.params.subscribe((data) => {
     //   let itemId = data['id'];
-      console.log(this.route);
+      // console.log(this.route);
     //   console.log(data);
     // })
     this.route.queryParams.subscribe((data) => {
@@ -41,15 +41,15 @@ export class BreadcrumbComponent implements OnInit {
         this.breadcrumbs.push( {
           path: 'coursesList/id',
           component: data['itemId']
-        })
+        });
       } else if (this.breadcrumbs.length > 2) {
         this.breadcrumbs.pop();
       }
 
       // data['itemId'] : null;
       // console.log(this.route);
-      console.log(this.itemId);
-    })
+      // console.log(this.itemId);
+    });
   }
 
 }

@@ -10,6 +10,6 @@ export class CanActivateList implements CanActivate {
   }
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
-    return false;
+    return true;
   }
 }

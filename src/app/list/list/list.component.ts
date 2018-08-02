@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, Router, NavigationEnd } from '@angular/router';
 import * as _ from 'lodash';
 import { ListItem } from '../../model/list-item.model';
 
@@ -17,20 +17,35 @@ export class ListComponent implements OnInit {
   public routeParams: any = {};
 
   private deletedID: number;
+  private listItemIdFromUrl: string;
 
   constructor( private listService: ListService,
                private route: ActivatedRoute,
-               private router: Router) { }
+               private router: Router) {
+                this.router.events.forEach(event => {
+                  if (event instanceof NavigationEnd) {
+                    if (event.url.includes('coursesList')) {
+                      let pathArr = event.url.split('/');
+                      this.listItemIdFromUrl = pathArr[pathArr.indexOf('coursesList') + 1];
+                    }
+                    console.log(event.url);
+                  }
+                });
+                }
 
   ngOnInit() {
     this.listItems = this.listService.getOriginalListItems();
 
-    this.route.params.subscribe((data) => {
-      this.routeParams.id = data['id'];
-    });
-    this.route.data.subscribe((data) => {
-      console.log(data)
-    });
+    let item = this.listItems[this.listService.getListItemById(+this.listItemIdFromUrl)];
+    item.editMode = !item.editMode;
+    console.log(item);
+    // this.route.params.subscribe((data) => {
+    //   this.routeParams.id = data['id'];
+    //   console.log('routeParams.id', this.routeParams.id);
+    // });
+    // this.route.data.subscribe((data) => {
+    //   console.log('data', data);
+    // });
   }
 
   filteredArray(value: ListItem[]) {
@@ -66,7 +81,7 @@ export class ListComponent implements OnInit {
   setUrlParams(item: ListItem) {
     this.route.params.subscribe((data) => {
       this.routeParams.id = item.id;
-    })
+    });
     this.router.navigate(['../coursesList', item.id], {queryParams: {itemId: item.id}});
   }
 }

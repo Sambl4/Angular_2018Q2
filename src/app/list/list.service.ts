@@ -93,7 +93,7 @@ export class ListService {
     originalListItems.splice(_.findIndex(originalListItems, {id: id}), 1);
   }
 
-  private getListItemById(id: number) {
+  public getListItemById(id: number) {
     return _.findIndex(originalListItems, {id: id});
   }
 
