@@ -23,18 +23,7 @@ export const ROUTES: Route[] = [
       component: AddItemComponent
     }],
     canActivate: [CanActivateList]
-  },
-  //  {
-  //   path: 'coursesList/:id',
-  //   component: ListItemComponent,
-  //   data: {'auth_key': 'key'}
-  // },
-  //  {
-  //   path: 'coursesList/new',
-  //   component: AddItemComponent,
-  //   data: {'auth_key': 'key'}
-  // },
-   {
+  }, {
     path: 'home',
     component: HomeComponent,
     data: {'auth_key': 'key'}

@@ -55,21 +55,18 @@ export class AuthorizationComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.authorizationService.IsAuthenticated();
     this.needRegister = false;
     this.isRegistred = false;
     this.isAuthenticated = false;
     this.submitted = false;
-
     this.emailExists = false;
+    this.authorizationService.IsAuthenticated();
   }
 
   login() {
     this.isAuthenticated = this.authorizationService.Login(this.user);
     if (this.isAuthenticated) {
       console.log('logged in successfully');
-      // this.router.navigate(['../coursesList'], extras: NavigationExtras = { skipLocationChange: false });
       this.router.navigate(['../coursesList']);
     }
     this.submitted = true;

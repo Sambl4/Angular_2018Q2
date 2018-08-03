@@ -40,14 +40,7 @@ export class ListComponent implements OnInit {
       itemById.editMode = !itemById.editMode;
     } else if (this.listItemIdFromUrl) {
       this.router.navigate(['../page404']);
-    };
-    // this.route.params.subscribe((data) => {
-    //   this.routeParams.id = data['id'];
-    //   console.log('routeParams.id', this.routeParams.id);
-    // });
-    // this.route.data.subscribe((data) => {
-    //   console.log('data', data);
-    // });
+    }
   }
 
 

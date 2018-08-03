@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot, Router, Params, NavigationEnd } from '@angular/router';
+import { ActivatedRoute, Router, Params, NavigationEnd } from '@angular/router';
 
 import * as _ from 'lodash';
 
@@ -9,16 +9,7 @@ import * as _ from 'lodash';
   styleUrls: ['./breadcrumb.component.css']
 })
 export class BreadcrumbComponent implements OnInit {
-  public breadcrumbs: any[] = [
-    // {
-    //   path: 'home',
-    //   component: 'Home'
-    // },
-    // {
-    //   path: 'coursesList',
-    //   component: 'Courses List'
-    // }
-  ];
+  public breadcrumbs: any[] = [];
   private itemId: string;
   private listItemIdFromUrl: string;
   private prevPath: string;
@@ -56,14 +47,14 @@ export class BreadcrumbComponent implements OnInit {
         this.activatedRoute.queryParams.subscribe((data) => {
             _.forEach(pathElements, elementPath => this.prepareBreadcrumbItem(elementPath));
 
-          if(data['itemId']) {
+          if (data['itemId']) {
             this.breadcrumbs.push( {
               path: data['itemId'],
               component: data['itemName']
             });
           }
         });
-      };
+      }
     });
   }
 

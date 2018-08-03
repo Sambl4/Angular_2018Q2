@@ -10,45 +10,29 @@ import { Observable, BehaviorSubject } from 'rxjs';
 })
 
 export class AuthorizationService {
+  public redirectUrl: string;
   private _isAuthenticated = new BehaviorSubject<boolean>(false);
   public isAuthenticated = this._isAuthenticated.asObservable();
 
-  private dbUsers: User[] = [];
-  private users: User[] = [
-  // {
-  //   id: 1234567890,
-  //   email: 'user@gmail.com',
-  //   firstName: 'Test',
-  //   lastName: 'User',
-  //   pass: '1234',
-  //   role: 'User',
-  //   token: 'fake0987654321Tokenresu'
-  // }, {
-  //   id: 91234567890,
-  //   email: 'admin@gmail.com',
-  //   firstName: 'Test',
-  //   lastName: 'Admin',
-  //   pass: '1234',
-  //   role: 'Admin',
-  //   token: 'fake09876543219Tokennimda'
-  // }
-  ];
+  private users: User[] = [];
 
   private activeUser;
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router) {
-    // this.activatedRoute.url.subscribe(url => console.log(url));
     this.activatedRoute.data.subscribe((data) => {
-      // console.log(data);
     });
     console.log(this.router.url);
+    this.users = JSON.parse(localStorage.getItem('db')) || [];
+
+    this.activatedRoute.queryParams.subscribe((data) => {
+    this.redirectUrl = data['redirectedFrom'];
+    });
    }
 
   Login(user: User) {
     const userIndex = this.getUserIndex(user);
     if (userIndex >= 0 && user.email === this.users[userIndex].email &&
         user.pass === this.users[userIndex].pass) {
-        user.token = this.generateToken(user);
         this.setTokenToStorage(user.token);
         this.activeUser = this.users[userIndex];
         this._isAuthenticated.next(true);
@@ -65,10 +49,13 @@ export class AuthorizationService {
   }
 
   IsAuthenticated() {
-    this.getTokenFromDB(this.getTokenFromStorage()) ||
-    this.getTokenFromStorage() === _.get(this.GetActiveUserInfo(), 'token') ?
-      this._isAuthenticated.next(true) :
+    if (this.getTokenFromDB(this.getTokenFromStorage()) ||
+    this.getTokenFromStorage() === _.get(this.GetActiveUserInfo(), 'token')) {
+      this._isAuthenticated.next(true);
+      this.router.navigate([this.redirectUrl]);
+    } else {
       this._isAuthenticated.next(false);
+    }
     return this.isAuthenticated;
   }
 
@@ -86,8 +73,7 @@ export class AuthorizationService {
   }
 
   setUserToDB(user: User) {
-    // this.users.push(user);
-    localStorage.setItem('db',  JSON.stringify(this.users));
+    localStorage.setItem('db', JSON.stringify(this.users));
   }
 
   removeTokenFromStorage() {
@@ -99,8 +85,7 @@ export class AuthorizationService {
   }
 
   getTokenFromDB(token: string): boolean {
-    const storagedUsers: User = JSON.parse(localStorage.getItem('db'));
-    this.activeUser = _.find(storagedUsers, {token : token});
+    this.activeUser = _.find(this.users, {token : token});
 
     return this.activeUser ? true : false;
 
