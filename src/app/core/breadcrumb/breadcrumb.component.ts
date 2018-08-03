@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot, Router, Params } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, Router, Params, NavigationEnd } from '@angular/router';
+
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-breadcrumb',
@@ -8,47 +10,60 @@ import { ActivatedRoute, ActivatedRouteSnapshot, Router, Params } from '@angular
 })
 export class BreadcrumbComponent implements OnInit {
   public breadcrumbs: any[] = [
-    {
-      path: 'home',
-      component: 'Home'
-    }, {
-      path: 'coursesList',
-      component: 'Courses List'
-    }
+    // {
+    //   path: 'home',
+    //   component: 'Home'
+    // },
+    // {
+    //   path: 'coursesList',
+    //   component: 'Courses List'
+    // }
   ];
   private itemId: string;
+  private listItemIdFromUrl: string;
+  private prevPath: string;
 
-  constructor(private route: ActivatedRoute) {
-    // console.log(this.route)
-    // this.route.params.subscribe((data) => {
-    //   // let itemId = data['id'];
-    //   console.log(this.route);
-    //   console.log(data);
-    // })
-    // this.route.queryParams.subscribe((data) => {
-    //   console.log(data)
-    // })
+  constructor(private activatedRoute: ActivatedRoute, private router: Router) {
+
+  }
+  prepareBreadcrumbItem(elementPath: string) {
+    if (elementPath.includes('?')) {
+      return;
+    }
+    let componentName = _.get(_.find(this.router.config, {path: elementPath}), 'component.name');
+
+    if (componentName) {
+      this.prevPath = elementPath + '/';
+      this.breadcrumbs.push({
+        path: elementPath,
+        component: componentName.replace('Component', '')
+      });
+    } else {
+      this.breadcrumbs.push({
+        path: this.prevPath + elementPath,
+        component: elementPath
+      });
+
+    }
   }
 
   ngOnInit() {
-    //  this.route.params.subscribe((data) => {
-    //   let itemId = data['id'];
-      // console.log(this.route);
-    //   console.log(data);
-    // })
-    this.route.queryParams.subscribe((data) => {
-      if (data['itemId'] && this.breadcrumbs.length >= 2) {
-        this.breadcrumbs.push( {
-          path: 'coursesList/id',
-          component: data['itemId']
-        });
-      } else if (this.breadcrumbs.length > 2) {
-        this.breadcrumbs.pop();
-      }
+    this.router.events.forEach(event => {
+      this.breadcrumbs = [];
+      if (event instanceof NavigationEnd) {
+        let pathElements = _.filter(event.url.split('/'), elem => elem.length > 0);
 
-      // data['itemId'] : null;
-      // console.log(this.route);
-      // console.log(this.itemId);
+        this.activatedRoute.queryParams.subscribe((data) => {
+            _.forEach(pathElements, elementPath => this.prepareBreadcrumbItem(elementPath));
+
+          if(data['itemId']) {
+            this.breadcrumbs.push( {
+              path: data['itemId'],
+              component: data['itemName']
+            });
+          }
+        });
+      };
     });
   }
 

@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, Input, ChangeDetectorRef } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 import { AuthorizationService } from '../../authorization/authorization.service';
 
 @Component({
@@ -15,7 +16,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public subscription: Subscription;
 
   isLogged: boolean;
-  constructor(private authorizationService: AuthorizationService) { }
+  constructor(private authorizationService: AuthorizationService, private router: Router) { }
 
   ngOnInit() {
     this.subscription = this.authorizationService.isAuthenticated
@@ -36,9 +37,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private isLoggedUpdate(result: boolean) {
     if (result) {
-      const userInfo = this.authorizationService.GetUserInfo();
+      const userInfo = this.authorizationService.GetActiveUserInfo();
       this.userName = userInfo.firstName + ' ' + userInfo.lastName;
+    } else {
+      // this.router.navigate(['../authorization']);
     }
     this.isLogged = result;
+
   }
 }

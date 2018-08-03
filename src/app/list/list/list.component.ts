@@ -19,26 +19,28 @@ export class ListComponent implements OnInit {
   private deletedID: number;
   private listItemIdFromUrl: string;
 
-  constructor( private listService: ListService,
-               private route: ActivatedRoute,
-               private router: Router) {
-                this.router.events.forEach(event => {
-                  if (event instanceof NavigationEnd) {
-                    if (event.url.includes('coursesList')) {
-                      let pathArr = event.url.split('/');
-                      this.listItemIdFromUrl = pathArr[pathArr.indexOf('coursesList') + 1];
-                    }
-                    console.log(event.url);
-                  }
-                });
-                }
+  constructor(private listService: ListService, private route: ActivatedRoute, private router: Router) {
+    this.router.events.forEach(event => {
+      if (event instanceof NavigationEnd) {
+        if (event.url.includes('coursesList')) {
+          let pathArr = event.url.split('/');
+          this.listItemIdFromUrl = pathArr[pathArr.indexOf('coursesList') + 1];
+        }
+      }
+    });
+  }
 
   ngOnInit() {
     this.listItems = this.listService.getOriginalListItems();
 
-    let item = this.listItems[this.listService.getListItemById(+this.listItemIdFromUrl)];
-    item.editMode = !item.editMode;
-    console.log(item);
+    let itemById = this.listItems[this.listService.getListItemById(+this.listItemIdFromUrl)];
+    if (this.listItemIdFromUrl === 'new') {
+      this.listService.createListItem();
+    } else if (this.listItemIdFromUrl && itemById) {
+      itemById.editMode = !itemById.editMode;
+    } else if (this.listItemIdFromUrl) {
+      this.router.navigate(['../page404']);
+    };
     // this.route.params.subscribe((data) => {
     //   this.routeParams.id = data['id'];
     //   console.log('routeParams.id', this.routeParams.id);
@@ -47,6 +49,8 @@ export class ListComponent implements OnInit {
     //   console.log('data', data);
     // });
   }
+
+
 
   filteredArray(value: ListItem[]) {
     this.listItems = value;
@@ -71,7 +75,7 @@ export class ListComponent implements OnInit {
 
   addNewCourse() {
     this.listService.createListItem();
-    this.router.navigate(['../coursesList', 'new'], {queryParams: {itemId: 'new'}});
+    this.router.navigate(['../coursesList', 'new'], {queryParams: {itemId: 'new', itemName: 'New'}});
   }
 
   loadMore() {
@@ -82,6 +86,6 @@ export class ListComponent implements OnInit {
     this.route.params.subscribe((data) => {
       this.routeParams.id = item.id;
     });
-    this.router.navigate(['../coursesList', item.id], {queryParams: {itemId: item.id}});
+    this.router.navigate(['../coursesList', item.id], {queryParams: {itemId: item.id, itemName: item.title}});
   }
 }

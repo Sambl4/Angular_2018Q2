@@ -55,6 +55,8 @@ export class AuthorizationComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.authorizationService.IsAuthenticated();
     this.needRegister = false;
     this.isRegistred = false;
     this.isAuthenticated = false;
