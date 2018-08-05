@@ -10,22 +10,23 @@ import { Observable, BehaviorSubject } from 'rxjs';
 })
 
 export class AuthorizationService {
-  public redirectUrl: string;
   private _isAuthenticated = new BehaviorSubject<boolean>(false);
   public isAuthenticated = this._isAuthenticated.asObservable();
 
+  private redirectUrl: string;
+  private authKey: string = '';
   private users: User[] = [];
 
-  private activeUser;
+  private activeUser: User;
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router) {
-    this.activatedRoute.data.subscribe((data) => {
-    });
-    console.log(this.router.url);
+    // this.activatedRoute.data.subscribe((data) => {
+    //   data['auth_key'] = this.authKey;
+    // });
     this.users = JSON.parse(localStorage.getItem('db')) || [];
 
     this.activatedRoute.queryParams.subscribe((data) => {
-    this.redirectUrl = data['redirectedFrom'];
+      this.redirectUrl = data['redirectedFrom'];
     });
    }
 
@@ -35,6 +36,7 @@ export class AuthorizationService {
         user.pass === this.users[userIndex].pass) {
         this.setTokenToStorage(user.token);
         this.activeUser = this.users[userIndex];
+        // this.authKey = this.activeUser.role;
         this._isAuthenticated.next(true);
         return true;
     } else {

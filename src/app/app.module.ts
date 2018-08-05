@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Directive } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 
 import { ROUTES } from './app.routes';
@@ -15,6 +16,8 @@ import { AuthorizationModule } from './authorization/authorization.module';
 
 import { CanActivateList } from './list/canActivateList.guard';
 
+import { AuthInterceptor } from './authorization/auth-interceptor';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -22,6 +25,7 @@ import { CanActivateList } from './list/canActivateList.guard';
   imports: [
     BrowserModule,
     RouterModule.forRoot(ROUTES),
+    HttpClientModule,
     CoreModule,
     ListModule,
     HomeModule,
@@ -29,7 +33,8 @@ import { CanActivateList } from './list/canActivateList.guard';
     // ReactiveFormsModule
   ],
   providers: [
-    CanActivateList
+    CanActivateList,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

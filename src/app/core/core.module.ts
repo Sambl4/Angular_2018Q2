@@ -9,6 +9,7 @@ import { ModalComponent } from './modal/modal.component';
 
 import { InfrastructureModule } from './infrastructure/infrastructure.module';
 import { NocontentComponent } from './nocontent/nocontent.component';
+import { PagingComponent } from './paging/paging.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { NocontentComponent } from './nocontent/nocontent.component';
     BreadcrumbComponent,
     FooterComponent,
     ModalComponent,
-    NocontentComponent
+    NocontentComponent,
+    PagingComponent
   ],
   exports: [
     HeaderComponent,

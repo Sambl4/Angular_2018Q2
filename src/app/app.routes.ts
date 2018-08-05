@@ -26,16 +26,16 @@ export const ROUTES: Route[] = [
   }, {
     path: 'home',
     component: HomeComponent,
-    data: {'auth_key': 'key'}
+    data: {'auth_key': ''}
   }, {
     path: 'authorization',
     component: AuthorizationComponent,
-    data: {'auth_key': 'key'}
+    data: {'auth_key': ''}
   }, {
     path: '',
     redirectTo: 'coursesList',
     pathMatch: 'full',
-    data: {'auth_key': 'key'}
+    data: {'auth_key': ''}
   }, {
     path: 'page404',
     component: NocontentComponent
