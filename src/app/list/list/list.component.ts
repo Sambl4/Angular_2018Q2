@@ -31,7 +31,10 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.listItems = this.listService.getOriginalListItems();
+    this.listService.getList().subscribe((data) => {
+      this.listItems = data;
+    });
+    // this.listItems = this.listService.getOriginalListItems();
 
     let itemById = this.listItems[this.listService.getListItemById(+this.listItemIdFromUrl)];
     if (this.listItemIdFromUrl === 'new') {
@@ -43,7 +46,11 @@ export class ListComponent implements OnInit {
     }
   }
 
-
+  getUsersFromBE() {
+    this.listService.getUsers().subscribe((res: any[]) => {
+      console.log(res);
+    });
+  }
 
   filteredArray(value: ListItem[]) {
     this.listItems = value;
@@ -79,6 +86,9 @@ export class ListComponent implements OnInit {
     this.route.params.subscribe((data) => {
       this.routeParams.id = item.id;
     });
+    // this.route.data.subscribe((data) => {
+    //   console.log(data['auth_key']);
+    // });
     this.router.navigate(['../coursesList', item.id], {queryParams: {itemId: item.id, itemName: item.title}});
   }
 }

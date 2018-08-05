@@ -1,0 +1,12 @@
+{
+  "users": [{
+    "id":1533320258102,
+    "email":"user@gmail.com",
+    "firstName":"Anna1",
+    "lastName":"Borisova",
+    "pass":"1234",
+    "role":"User",
+    "token":"fake2018520233351token1anna",
+    "passCheking":"1234"
+  }]
+}
