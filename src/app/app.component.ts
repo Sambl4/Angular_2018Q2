@@ -9,11 +9,11 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 
 export class AppComponent {
-  public isAuthPath: boolean;
+  public hideByUrl: boolean;
   constructor(private router: Router) {
     router.events.forEach(event => {
       if (event instanceof NavigationEnd) {
-        this.isAuthPath = event.url === '/authorization';
+        this.hideByUrl = event.url === '/authorization' || event.url === '/page404';
         }});
-    };
+    }
 }

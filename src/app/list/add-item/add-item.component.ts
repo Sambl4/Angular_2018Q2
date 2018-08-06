@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { ListItem } from '../../model/list-item.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-item',
@@ -12,17 +13,19 @@ export class AddItemComponent implements OnInit {
 @Input() public listItem: ListItem;
 @Output() cancelEditItem: EventEmitter<ListItem> = new EventEmitter<ListItem>();
 @Output() saveEditItem: EventEmitter<ListItem> = new EventEmitter<ListItem>();
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
   cancelEdit(listItem: ListItem) {
     this.cancelEditItem.emit(listItem);
+    this.router.navigate(['../coursesList']);
   }
 
   saveEdit(listItem: ListItem) {
     this.saveEditItem.emit(listItem);
+    this.router.navigate(['../coursesList']);
   }
 
   changedDuration(duration: number) {

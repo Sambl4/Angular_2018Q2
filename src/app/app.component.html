@@ -1,8 +1,8 @@
 <main class="wrapper">
   <!-- <app-list></app-list> -->
-  <app-header [isAuthPath]="isAuthPath">
+  <app-header [hideByUrl]="hideByUrl">
   </app-header>
-  <app-breadcrumb *ngIf="!isAuthPath"></app-breadcrumb>
+  <app-breadcrumb *ngIf="!hideByUrl"></app-breadcrumb>
   <div class="container">
     <router-outlet></router-outlet>
   </div>

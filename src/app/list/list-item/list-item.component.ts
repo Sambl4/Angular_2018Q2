@@ -16,9 +16,10 @@ export class ListItemComponent implements OnInit {
   @Input() public listItem: ListItem;
   @Output() deleteItemById: EventEmitter<ListItem> = new EventEmitter<ListItem>();
   @Output() updateItem: EventEmitter<ListItem> = new EventEmitter<ListItem>();
+  @Output() setUrlParams: EventEmitter<ListItem> = new EventEmitter<ListItem>();
 
   public isMyRate = false; // will be received from user service
-  constructor() { }
+  constructor( ) { }
 
   ngOnInit() {
   }
@@ -38,6 +39,7 @@ export class ListItemComponent implements OnInit {
     const editModeItem: ListItem = cloneDeep(item);
     editModeItem.editMode = !this.listItem.editMode;
     this.listItem = editModeItem;
+    this.setUrlParams.emit(item);
   }
 
   cancelEditItem(item: ListItem) {

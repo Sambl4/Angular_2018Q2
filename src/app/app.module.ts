@@ -5,11 +5,15 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 
 import { ROUTES } from './app.routes';
+// import { ReactiveFormsModule } from "@angular/forms";
 
 import { CoreModule } from './core/core.module';
 import { ListModule } from './list/list.module';
 import { HomeModule } from './home/home.module';
 import { AuthorizationModule } from './authorization/authorization.module';
+
+
+import { CanActivateList } from './list/canActivateList.guard';
 
 @NgModule({
   declarations: [
@@ -21,9 +25,12 @@ import { AuthorizationModule } from './authorization/authorization.module';
     CoreModule,
     ListModule,
     HomeModule,
-    AuthorizationModule
+    AuthorizationModule,
+    // ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    CanActivateList
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

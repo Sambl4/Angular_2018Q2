@@ -11,7 +11,8 @@ import { ShareModule } from '../share/share.module';
     CommonModule,
     RouterModule,
     ShareModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     AuthorizationComponent
