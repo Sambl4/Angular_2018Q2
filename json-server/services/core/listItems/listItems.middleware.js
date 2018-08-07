@@ -6,7 +6,7 @@ let failedRequestsCount = 0;
 
 module.exports = (server) => {
 
-  router.get('/coursesList', (req, res, next) => {
+  router.get('/courses', (req, res, next) => {
 
     if (!req.header('Authorization')) {
       res.status(401).send('Unathorized!');

@@ -119,6 +119,7 @@ export class ListService {
       title: null,
       duration: Math.floor(Math.random() * (240 - 15)) + 15,
       date: null,
+      authors: [],
       description: null,
       rate: false,
       editMode: true,

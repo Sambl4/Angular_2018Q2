@@ -12,7 +12,7 @@ import { CanActivateList } from './list/canActivateList.guard';
 
 export const ROUTES: Route[] = [
   {
-    path: 'coursesList',
+    path: 'courses',
     component: ListComponent,
     data: {'auth_key': ''},
     children: [{
@@ -28,12 +28,12 @@ export const ROUTES: Route[] = [
     component: HomeComponent,
     data: {'auth_key': ''}
   }, {
-    path: 'authorization',
+    path: 'auth',
     component: AuthorizationComponent,
     data: {'auth_key': ''}
   }, {
     path: '',
-    redirectTo: 'coursesList',
+    redirectTo: 'courses',
     pathMatch: 'full',
     data: {'auth_key': ''}
   }, {

@@ -18,7 +18,7 @@ private isAuthenticated: any;
     if (this.isAuthenticated) {
       return true;
     } else {
-      this.router.navigate(['../authorization'], {queryParams: {redirectedFrom: redirectedUrl}});
+      this.router.navigate(['../auth'], {queryParams: {redirectedFrom: redirectedUrl}});
       return false;
     }
   }

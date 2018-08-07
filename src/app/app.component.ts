@@ -13,7 +13,7 @@ export class AppComponent {
   constructor(private router: Router) {
     router.events.forEach(event => {
       if (event instanceof NavigationEnd) {
-        this.hideByUrl = event.url === '/authorization' || event.url === '/page404';
+        this.hideByUrl = event.url === '/auth' || event.url === '/page404';
         }});
     }
 }
