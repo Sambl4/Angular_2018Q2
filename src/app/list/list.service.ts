@@ -64,7 +64,7 @@ let originalListItems:  ListItem[] = [
 
 let renderingListItems: ListItem[] = [];
 
-const BASE_URL = 'http://localhost:3004/listItems';
+const BASE_URL = 'http://localhost:3004/coursesList';
 // const BASE_URL = 'http://localhost:3004/users';
 @Injectable({
   providedIn: 'root'
@@ -75,7 +75,10 @@ export class ListService {
   constructor(private http: HttpClient) { }
 
   public getList(): Observable<ListItem[]> {
-    return this.http.get<ListItem[]>(`${BASE_URL}`);
+    return this.http.get<ListItem[]>(`${BASE_URL}`,
+      { params: {},
+      headers: { 'Authorization':  'authorize-me'}
+    });
   }
   public getUsers(): Observable<any[]> {
     return this.http.get<any[]>(`${BASE_URL}`);
