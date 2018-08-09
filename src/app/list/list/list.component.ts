@@ -22,9 +22,9 @@ export class ListComponent implements OnInit {
   constructor(private listService: ListService, private route: ActivatedRoute, private router: Router) {
     this.router.events.forEach(event => {
       if (event instanceof NavigationEnd) {
-        if (event.url.includes('coursesList')) {
+        if (event.url.includes('courses')) {
           let pathArr = event.url.split('/');
-          this.listItemIdFromUrl = pathArr[pathArr.indexOf('coursesList') + 1];
+          this.listItemIdFromUrl = pathArr[pathArr.indexOf('courses') + 1];
         }
       }
     });
@@ -75,7 +75,7 @@ export class ListComponent implements OnInit {
 
   addNewCourse() {
     this.listService.createListItem();
-    this.router.navigate(['../coursesList', 'new'], {queryParams: {itemId: 'new', itemName: 'New'}});
+    this.router.navigate(['../courses', 'new'], {queryParams: {itemId: 'new', itemName: 'New'}});
   }
 
   loadMore() {
@@ -89,6 +89,6 @@ export class ListComponent implements OnInit {
     // this.route.data.subscribe((data) => {
     //   console.log(data['auth_key']);
     // });
-    this.router.navigate(['../coursesList', item.id], {queryParams: {itemId: item.id, itemName: item.title}});
+    this.router.navigate(['../courses', item.id], {queryParams: {itemId: item.id, itemName: item.title}});
   }
 }

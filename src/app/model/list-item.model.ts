@@ -1,12 +1,12 @@
 import { Author } from './author.model';
 
-export interface ListItem extends Author {
+export interface ListItem {
   id: number;
   title: string;
   description: string;
   rate: boolean;
   date: string;
-  authors: Author[];
   duration: number;
   editMode: boolean;
+  authors: Author[];
 }

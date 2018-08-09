@@ -12,22 +12,21 @@ module.exports = (server) => {
       res.status(401).send('Unathorized!');
     }
 
-    let listItemsDB = server.db.getState().listItems;
-    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', listItemsDB)
+    let coursesDB = server.db.getState().courses;
 
     if (req.query['textFragment'] === 'error' && failedRequestsCount <= 3) {
       failedRequestsCount++;
       res.status('500').send('Something went wrong');
     }
 
-    // let listItems = req.query['textFragment'] ? listItemsDB.filter((listItem) => {
-    //   return listItem.name.toUpperCase().indexOf(req.query['textFragment'].toUpperCase()) >= 0;
-    // }) : listItemsDB;
+    // let courses = req.query['textFragment'] ? coursesDB.filter((course) => {
+    //   return course.name.toUpperCase().indexOf(req.query['textFragment'].toUpperCase()) >= 0;
+    // }) : coursesDB;
 
-    // listItems = listItems.slice(0, req.query['count']);
+    // courses = courses.slice(0, req.query['count']);
 
-    // res.json(listItems);
-    res.json(listItemsDB);
+    // res.json(courses);
+    res.json(coursesDB);
   });
 
   return router;

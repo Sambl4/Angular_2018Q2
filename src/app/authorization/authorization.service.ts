@@ -1,10 +1,16 @@
 import { Injectable } from '@angular/core';
 
 import { ActivatedRoute, ActivatedRouteSnapshot, Router, Params } from '@angular/router';
+
+import { HttpClient, HttpResponse, HttpErrorResponse,
+  HttpParams, HttpHeaders  } from '@angular/common/http';
 import * as _ from 'lodash';
 import { User } from '../model/user.model';
 
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
+
+const BASE_USERS_URL = 'http://localhost:3004/users';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -19,23 +25,28 @@ export class AuthorizationService {
 
   private activeUser: User;
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router) {
+  constructor(private activatedRoute: ActivatedRoute, private router: Router, private http: HttpClient) {
     // this.activatedRoute.data.subscribe((data) => {
     //   data['auth_key'] = this.authKey;
     // });
-    this.users = JSON.parse(localStorage.getItem('db')) || [];
+    // this.users = JSON.parse(localStorage.getItem('db')) || [];
 
     this.activatedRoute.queryParams.subscribe((data) => {
       this.redirectUrl = data['redirectedFrom'];
     });
-   }
+  }
+
+  getUsers(): Observable<any[]> {
+    return this.http.get<any[]>(`${BASE_USERS_URL}`);
+  }
 
   Login(user: User) {
     const userIndex = this.getUserIndex(user);
     if (userIndex >= 0 && user.email === this.users[userIndex].email &&
         user.pass === this.users[userIndex].pass) {
-        this.setTokenToStorage(user.token);
-        this.activeUser = this.users[userIndex];
+          // this.setTokenToStorage('user.token');
+          this.activeUser = this.users[userIndex];
+          this.setTokenToStorage(this.activeUser.token);
         // this.authKey = this.activeUser.role;
         this._isAuthenticated.next(true);
         return true;
@@ -51,6 +62,14 @@ export class AuthorizationService {
   }
 
   IsAuthenticated() {
+    const token: string = this.getTokenFromStorage();
+
+    if (token) {
+      return '';
+    } else {
+      this._isAuthenticated.next(false);
+    }
+
     if (this.getTokenFromDB(this.getTokenFromStorage()) ||
     this.getTokenFromStorage() === _.get(this.GetActiveUserInfo(), 'token')) {
       this._isAuthenticated.next(true);
