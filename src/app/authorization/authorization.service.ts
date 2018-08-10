@@ -10,6 +10,8 @@ import { User } from '../model/user.model';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
 
 const BASE_USERS_URL = 'http://localhost:3004/users';
+const USER_LOGIN_EMAIL_URL = 'http://localhost:3004/user/login/email';
+const USER_LOGIN_TOKEN_URL = 'http://localhost:3004/user/login/token';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +25,7 @@ export class AuthorizationService {
   private authKey: string = '';
   private users: User[] = [];
 
-  private activeUser: User;
+  private activeUser: any;
 
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private http: HttpClient) {
     // this.activatedRoute.data.subscribe((data) => {
@@ -32,28 +34,57 @@ export class AuthorizationService {
     // this.users = JSON.parse(localStorage.getItem('db')) || [];
 
     this.activatedRoute.queryParams.subscribe((data) => {
-      this.redirectUrl = data['redirectedFrom'];
+      this.redirectUrl = _.get(data, 'redirectedFrom', '');
+    // const redirectTo = this.redirectUrl || '/courses';
     });
   }
 
-  getUsers(): Observable<any[]> {
+  getUser(): Observable<any[]> {
     return this.http.get<any[]>(`${BASE_USERS_URL}`);
   }
 
+  loginUserByEmail(email: string, pass: string): Observable<any[]> {
+    return this.http.get<any[]>(`${USER_LOGIN_EMAIL_URL}`, {
+      params: {
+        email: email,
+        pass: pass
+      }
+    });
+  }
+
+  loginUserByToken(token: string): Observable<any[]> {
+    return this.http.get<any[]>(`${USER_LOGIN_TOKEN_URL}`, {
+      params: { token: token }
+    });
+  }
+
   Login(user: User) {
-    const userIndex = this.getUserIndex(user);
-    if (userIndex >= 0 && user.email === this.users[userIndex].email &&
-        user.pass === this.users[userIndex].pass) {
-          // this.setTokenToStorage('user.token');
-          this.activeUser = this.users[userIndex];
-          this.setTokenToStorage(this.activeUser.token);
-        // this.authKey = this.activeUser.role;
-        this._isAuthenticated.next(true);
-        return true;
-    } else {
+    this.loginUserByEmail(user.email, user.pass).subscribe((data) => {
+     if (data) {
+      this.activeUser = data;
+      this.setTokenToStorage(this.activeUser.token);
+      this.router.navigate([this.redirectUrl]);
+      this._isAuthenticated.next(true);
+      return true;
+     } else {
       this._isAuthenticated.next(false);
       return false;
-    }
+     }
+    });
+
+    // const userIndex = this.getUserIndex(user);
+    // if (userIndex >= 0 && user.email === this.users[userIndex].email &&
+    //     user.pass === this.users[userIndex].pass) {
+    //       // this.setTokenToStorage('user.token');
+    //       this.activeUser = this.users[userIndex];
+    //       this.setTokenToStorage(this.activeUser.token);
+    //     // this.authKey = this.activeUser.role;
+    //     this._isAuthenticated.next(true);
+    //     return true;
+    // } else {
+    //   this._isAuthenticated.next(false);
+    //   return false;
+    // }
   }
 
   Logout() {
@@ -62,21 +93,34 @@ export class AuthorizationService {
   }
 
   IsAuthenticated() {
-    const token: string = this.getTokenFromStorage();
+    const userTokenFromStorage: string = this.getTokenFromStorage();
 
-    if (token) {
-      return '';
-    } else {
-      this._isAuthenticated.next(false);
-    }
-
-    if (this.getTokenFromDB(this.getTokenFromStorage()) ||
-    this.getTokenFromStorage() === _.get(this.GetActiveUserInfo(), 'token')) {
+    userTokenFromStorage ? this.loginUserByToken(userTokenFromStorage).subscribe((data) => {
+      this.activeUser = data;
       this._isAuthenticated.next(true);
       this.router.navigate([this.redirectUrl]);
-    } else {
-      this._isAuthenticated.next(false);
-    }
+    }) : this._isAuthenticated.next(false);
+
+    // if (userTokenFromStorage && userTokenFromStorage === _.get(this.GetActiveUserInfo(), 'token')) {
+    //   this._isAuthenticated.next(true);
+    //   this.router.navigate([this.redirectUrl]);
+    // } else if (userTokenFromStorage) {
+    //   this.getUser().subscribe((data) => {
+    //     this.activeUser = data;
+    //     this._isAuthenticated.next(true);
+    //     this.router.navigate([this.redirectUrl]);
+    //   });
+    // } else {
+    //   this._isAuthenticated.next(false);
+    // }
+
+    // if (this.getTokenFromDB(this.getTokenFromStorage()) ||
+    // this.getTokenFromStorage() === _.get(this.GetActiveUserInfo(), 'token')) {
+    //   this._isAuthenticated.next(true);
+    //   this.router.navigate([this.redirectUrl]);
+    // } else {
+    //   this._isAuthenticated.next(false);
+    // }
     return this.isAuthenticated;
   }
 
@@ -98,7 +142,7 @@ export class AuthorizationService {
   }
 
   removeTokenFromStorage() {
-    localStorage.setItem('mytoken', '');
+    localStorage.removeItem('mytoken');
   }
 
   getTokenFromStorage() {
