@@ -30,7 +30,8 @@ import { PagingComponent } from './paging/paging.component';
     BreadcrumbComponent,
     FooterComponent,
     ModalComponent,
-    InfrastructureModule
+    InfrastructureModule,
+    PagingComponent
   ]
 })
 export class CoreModule { }

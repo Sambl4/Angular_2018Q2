@@ -8,59 +8,7 @@ import * as _ from 'lodash';
 
 import { ListItem } from '../model/list-item.model';
 
-let originalListItems:  ListItem[] = [
-  // {
-  //   id: 1,
-  //   title: 'Title 1',
-  //   duration: 67,
-  //   date: '2018-05-15',
-  //   description: 'Description 1',
-  //   rate: true,
-  //   editMode: false,
-  // }, {
-  //   id: 2,
-  //   title: 'Title 2',
-  //   duration: 90,
-  //   date: '2018-09-21',
-  //   description: 'Description 2',
-  //   rate: false,
-  //   editMode: false,
-  // }, {
-  //   id: 3,
-  //   title: 'Title 3',
-  //   duration: 15,
-  //   date: '2018-09-07',
-  //   description: 'Description 3',
-  //   rate: true,
-  //   editMode: false,
-  // }, {
-  //   id: 4,
-  //   title: 'Title 1',
-  //   duration: 60,
-  //   date: '2018-06-29',
-  //   description: 'Angular is running in the development mode. Call enableProdMode() to enable the production mode' +
-  //                 'Angular is running in the development mode. Call enableProdMode() to enable the production mode' +
-  //                 'Angular is running in the development mode. Call enableProdMode() to enable the production mode',
-  //   rate: false,
-  //   editMode: false,
-  // }, {
-  //   id: 5,
-  //   title: 'Title 2',
-  //   duration: 125,
-  //   date: '2018-05-07',
-  //   description: 'Description 2',
-  //   rate: false,
-  //   editMode: false,
-  // }, {
-  //   id: 6,
-  //   title: 'Title 3',
-  //   duration: 45,
-  //   date: '2018-12-15',
-  //   description: 'Description 3',
-  //   rate: false,
-  //   editMode: false,
-  // }
-];
+let originalListItems:  ListItem[] = [];
 
 let renderingListItems: ListItem[] = [];
 
@@ -74,11 +22,18 @@ export class ListService {
 
   constructor(private http: HttpClient) { }
 
-  public getList(): Observable<ListItem[]> {
+  public getList(currentPage: number = 1, pageSize: number, textFragment?: string): Observable<ListItem[]> {
+    const params = textFragment ? {
+        currentPage: '' + currentPage,
+        pageSize: '' + pageSize,
+        textFragment: textFragment
+      } : {
+        currentPage: '' + currentPage,
+        pageSize: '' + pageSize
+      };
+
     return this.http.get<ListItem[]>(`${BASE_COURSES_URL}`,
-      { params: {},
-      // headers: { 'Authorization':  'authorize-me'}
-    });
+      { params: params });
   }
   public getUsers(): Observable<any[]> {
     return this.http.get<any[]>(`${BASE_USERS_URL}`);
@@ -96,8 +51,13 @@ export class ListService {
     renderingListItems = arr;
   }
 
-  public createListItem() {
-    originalListItems.unshift(this.generateNewItem());
+  // public createListItem() {
+  //   originalListItems.unshift(this.generateNewItem());
+  // }
+  public createListItem(): Observable<ListItem[]> {
+    const params = this.generateNewItem();
+    return this.http.post<any>(`${BASE_COURSES_URL}`,
+      {params: params});
   }
 
   public updateItem(item: ListItem) {
@@ -105,8 +65,10 @@ export class ListService {
     originalListItems[updatedItemIndex] = item;
   }
 
-  public removeListItemById(id: number) {
-    originalListItems.splice(_.findIndex(originalListItems, {id: id}), 1);
+  public removeListItemById(id: number): Observable<ListItem[]> {
+    const params = { id: id.toString() };
+    return this.http.delete<any>(`${BASE_COURSES_URL}`,
+      {params: params});
   }
 
   public getListItemById(id: number) {
@@ -122,7 +84,7 @@ export class ListService {
       authors: [],
       description: null,
       rate: false,
-      editMode: true,
+      // editMode: true,
     };
   }
 }
