@@ -1,46 +1,77 @@
 import { Injectable } from '@angular/core';
 
 import { ActivatedRoute, ActivatedRouteSnapshot, Router, Params } from '@angular/router';
+
+import { HttpClient, HttpResponse, HttpErrorResponse,
+  HttpParams, HttpHeaders  } from '@angular/common/http';
 import * as _ from 'lodash';
 import { User } from '../model/user.model';
 
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
+
+const BASE_USERS_URL = 'http://localhost:3004/users';
+const USER_LOGIN_EMAIL_URL = 'http://localhost:3004/user/login/email';
+const USER_LOGIN_TOKEN_URL = 'http://localhost:3004/user/login/token';
+
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthorizationService {
-  public redirectUrl: string;
   private _isAuthenticated = new BehaviorSubject<boolean>(false);
   public isAuthenticated = this._isAuthenticated.asObservable();
 
+  private redirectUrl: string;
+  private authKey: string = '';
   private users: User[] = [];
 
-  private activeUser;
+  private activeUser: any;
 
-  constructor(private activatedRoute: ActivatedRoute, private router: Router) {
-    this.activatedRoute.data.subscribe((data) => {
-    });
-    console.log(this.router.url);
-    this.users = JSON.parse(localStorage.getItem('db')) || [];
+  constructor(private activatedRoute: ActivatedRoute, private router: Router, private http: HttpClient) {
+    // this.activatedRoute.data.subscribe((data) => {
+    //   data['auth_key'] = this.authKey;
+    // });
 
     this.activatedRoute.queryParams.subscribe((data) => {
-    this.redirectUrl = data['redirectedFrom'];
+      this.redirectUrl = _.get(data, 'redirectedFrom', '');
     });
-   }
+  }
 
-  Login(user: User) {
-    const userIndex = this.getUserIndex(user);
-    if (userIndex >= 0 && user.email === this.users[userIndex].email &&
-        user.pass === this.users[userIndex].pass) {
-        this.setTokenToStorage(user.token);
-        this.activeUser = this.users[userIndex];
+  getUser(): Observable<any[]> {
+    return this.http.get<any[]>(`${BASE_USERS_URL}`);
+  }
+
+  loginUserByEmail(email: string, pass: string): Observable<any[]> {
+    return this.http.get<any[]>(`${USER_LOGIN_EMAIL_URL}`, {
+      params: {
+        email: email,
+        pass: pass
+      }
+    });
+  }
+
+  loginUserByToken(token: string): Observable<any[]> {
+    return this.http.get<any[]>(`${USER_LOGIN_TOKEN_URL}`, {
+      params: { token: token }
+    });
+  }
+
+  Login(user: User): boolean {
+    let isAuthenticated;
+
+    this.loginUserByEmail(user.email, user.pass).subscribe((data) => {
+      if (data) {
+        this.activeUser = data;
+        this.setTokenToStorage(this.activeUser.token);
+        this.router.navigate([this.redirectUrl]);
         this._isAuthenticated.next(true);
-        return true;
-    } else {
-      this._isAuthenticated.next(false);
-      return false;
-    }
+        isAuthenticated = true;
+      } else {
+        this._isAuthenticated.next(false);
+        isAuthenticated = false;
+      }
+    });
+    return isAuthenticated;
   }
 
   Logout() {
@@ -49,13 +80,13 @@ export class AuthorizationService {
   }
 
   IsAuthenticated() {
-    if (this.getTokenFromDB(this.getTokenFromStorage()) ||
-    this.getTokenFromStorage() === _.get(this.GetActiveUserInfo(), 'token')) {
+    const userTokenFromStorage: string = this.getTokenFromStorage();
+
+    userTokenFromStorage ? this.loginUserByToken(userTokenFromStorage).subscribe((data) => {
+      this.activeUser = data;
       this._isAuthenticated.next(true);
       this.router.navigate([this.redirectUrl]);
-    } else {
-      this._isAuthenticated.next(false);
-    }
+    }) : this._isAuthenticated.next(false);
     return this.isAuthenticated;
   }
 
@@ -77,7 +108,7 @@ export class AuthorizationService {
   }
 
   removeTokenFromStorage() {
-    localStorage.setItem('mytoken', '');
+    localStorage.removeItem('mytoken');
   }
 
   getTokenFromStorage() {

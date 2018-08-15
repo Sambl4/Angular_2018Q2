@@ -6,11 +6,11 @@
 
   <div *ngIf="!hideByUrl" class="login-section">
       <div *ngIf="!isLogged">
-        <button class="btn btn-light btn-logout" routerLink="../authorization">Login</button>
+        <button class="btn btn-light btn-logout" routerLink="../auth">Login</button>
       </div>
       <div  *ngIf="isLogged" class="login-section">
         <div class="username">{{userName}}</div>
-        <button (click)="logout()"  routerLink="../authorization" class="btn btn-light btn-logout">Logout</button>
+        <button (click)="logout()"  routerLink="../auth" class="btn btn-light btn-logout">Logout</button>
       </div>
 
   </div>

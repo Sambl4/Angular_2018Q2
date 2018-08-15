@@ -15,6 +15,7 @@ const SEARCH_BY_FIELD: string = 'title';
 
 export class SearchbarComponent implements OnInit {
   @Output() filteredArray: EventEmitter<ListItem[]> = new EventEmitter<ListItem[]>();
+  @Output() searchedValue: EventEmitter<string> = new EventEmitter<string>();
   searchValue: string;
   private searchedArray: ListItem[] = [];
 
@@ -24,13 +25,17 @@ export class SearchbarComponent implements OnInit {
   }
 
   search() {
-    let filteredByTitle: ListItem[];
-    this.searchedArray = this.listService.getOriginalListItems();
+    // let filteredByTitle: ListItem[];
+    // this.searchedArray = this.listService.getOriginalListItems();
 
-    (this.searchValue && this.searchValue.length) ?
-      filteredByTitle = this.searchByTitlePipe.transform(this.searchedArray, SEARCH_BY_FIELD, this.searchValue) :
-      filteredByTitle = this.listService.getOriginalListItems();
+    // (this.searchValue && this.searchValue.length) ?
+    //   filteredByTitle = this.searchByTitlePipe.transform(this.searchedArray, SEARCH_BY_FIELD, this.searchValue) :
+    //   filteredByTitle = this.listService.getOriginalListItems();
 
-    this.filteredArray.emit(filteredByTitle);
+    // this.filteredArray.emit(filteredByTitle);
+
+    if (this.searchValue && this.searchValue.length) {
+      this.searchedValue.emit(this.searchValue);
+    }
   }
 }

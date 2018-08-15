@@ -1,10 +1,12 @@
+import { Author } from './author.model';
+
 export interface ListItem {
   id: number;
   title: string;
-  duration: number;
-  // date: object;
-  date: string;
   description: string;
   rate: boolean;
+  date: string;
+  duration: number;
   editMode: boolean;
+  authors: Author[];
 }

@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       const userInfo = this.authorizationService.GetActiveUserInfo();
       this.userName = userInfo.firstName + ' ' + userInfo.lastName;
     } else {
-      // this.router.navigate(['../authorization']);
+      // this.router.navigate(['../auth']);
     }
     this.isLogged = result;
 

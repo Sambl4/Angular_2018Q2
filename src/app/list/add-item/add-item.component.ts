@@ -20,12 +20,12 @@ export class AddItemComponent implements OnInit {
 
   cancelEdit(listItem: ListItem) {
     this.cancelEditItem.emit(listItem);
-    this.router.navigate(['../coursesList']);
+    this.router.navigate(['../courses']);
   }
 
   saveEdit(listItem: ListItem) {
     this.saveEditItem.emit(listItem);
-    this.router.navigate(['../coursesList']);
+    this.router.navigate(['../courses']);
   }
 
   changedDuration(duration: number) {

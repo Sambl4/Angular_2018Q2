@@ -67,7 +67,7 @@ export class AuthorizationComponent implements OnInit {
     this.isAuthenticated = this.authorizationService.Login(this.user);
     if (this.isAuthenticated) {
       console.log('logged in successfully');
-      this.router.navigate(['../coursesList']);
+      this.router.navigate(['../courses']);
     }
     this.submitted = true;
   }
