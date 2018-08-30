@@ -11,3 +11,7 @@
 .search:focus {
   min-width: 600px;
 }
+
+.close {
+  margin-left: -50px;
+}

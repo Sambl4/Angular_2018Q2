@@ -3,7 +3,11 @@
         type="search"
         placeholder="Search"
         aria-label="Search"
-        [(ngModel)]="searchValue">
+        [ngModel]="searchValue"
+        (ngModelChange)="changeSearchValue($event)">
+  <button *ngIf="isSearched" type="button" (click)="searchingReset()" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="false">&times;</span>
+          </button>
   <!-- <button class="btn btn-outline-success my-1"
         (click)="search()">
     Search
