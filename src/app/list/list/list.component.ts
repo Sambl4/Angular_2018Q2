@@ -16,13 +16,13 @@ export class ListComponent implements OnInit {
   public options: any;
   public routeParams: any = {};
   public pageSize: number;
-  public currentPage:number;
+  public currentPage: number;
   public totalPages: number;
   public pageSizeOptions = {
     minSize: 1,
     maxSize: 5
   };
-  public textFragment: string
+  public textFragment: string;
 
   private deletedID: number;
   private listItemIdFromUrl: string;
@@ -95,7 +95,7 @@ export class ListComponent implements OnInit {
     this.listService.createListItem().subscribe((data) => {
       data['editMode'] = true;
       // this.getListFromBE();
-    })
+    });
     this.router.navigate(['../courses', 'new'], {queryParams: {itemId: 'new', itemName: 'New'}});
   }
 
@@ -119,7 +119,7 @@ export class ListComponent implements OnInit {
     ++this.currentPage;
     this.listService.getList(this.currentPage, this.pageSize).subscribe((data) => {
       this.listItems = this.listItems.concat(data);
-    })
+    });
   }
 
   changedCurrentPage(newCurrentPage: number) {

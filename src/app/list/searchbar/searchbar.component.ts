@@ -1,10 +1,11 @@
 import { Component, OnInit, Output, NgModule, EventEmitter } from '@angular/core';
+import { Observable, interval } from 'rxjs';
 
 import { ListItem } from '../../model/list-item.model';
 import { ListService } from '../list.service';
 import { SearchByTitlePipe } from '../../share/pipe/my-search.pipe';
 
-const SEARCH_BY_FIELD: string = 'title';
+// const SEARCH_BY_FIELD: string = 'title';
 
 @Component({
   selector: 'app-searchbar',
@@ -18,6 +19,8 @@ export class SearchbarComponent implements OnInit {
   @Output() searchedValue: EventEmitter<string> = new EventEmitter<string>();
   searchValue: string;
   private searchedArray: ListItem[] = [];
+  private source = Observable.create();
+  // private source = Observable.interval(200).take(3);
 
   constructor(private searchByTitlePipe: SearchByTitlePipe, private listService: ListService) { }
 
@@ -34,8 +37,8 @@ export class SearchbarComponent implements OnInit {
 
     // this.filteredArray.emit(filteredByTitle);
 
-    if (this.searchValue && this.searchValue.length) {
+    // if (this.searchValue && this.searchValue.length) {
       this.searchedValue.emit(this.searchValue);
-    }
+    // }
   }
 }
