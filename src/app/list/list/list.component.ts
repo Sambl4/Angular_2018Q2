@@ -128,7 +128,9 @@ export class ListComponent implements OnInit {
   }
 
   searchedValue(value) {
-    this.textFragment = value;
+    const subscribe = value.subscribe(data => {
+      this.textFragment = data;
+    });
     this.getListFromBE();
   }
 }

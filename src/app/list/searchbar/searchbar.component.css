@@ -4,11 +4,7 @@
   transition-duration: 0.5s;
 }
 
-.form-inline:hover .search {
-  min-width: 600px;
-}
-
-.search:focus {
+.form-inline:hover .search, .search:focus, .dirty {
   min-width: 600px;
 }
 
