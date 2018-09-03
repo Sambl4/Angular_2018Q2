@@ -61,13 +61,12 @@ export class ListComponent implements OnInit {
   getListFromBE() {
     this.showLoader();
     this.listService.getList(this.currentPage, this.pageSize, this.textFragment)
-    // .pipe(
-    //   catchError(value => {
-    //     console.warn(value);
-    //     return empty();
-    //   })
-    // )
-
+    .pipe(
+      catchError(value => {
+        console.warn(value);
+        return empty();
+      })
+    )
     .subscribe((data) => {
       this.listItems = [].concat(data['items']);
       this.totalPages = data['totalPages'];
