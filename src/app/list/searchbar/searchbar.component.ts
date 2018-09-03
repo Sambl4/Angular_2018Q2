@@ -86,7 +86,7 @@ export class SearchbarComponent implements OnInit {
   searchingReset() {
     this.isSearched = false;
     this.searchValue = '';
-    // this.searchedValue.emit(this.searchValue);
+    this.searchedValue.emit(this.searchobserver(this.searchValue));
   }
 
 

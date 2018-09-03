@@ -10,6 +10,7 @@ import { ModalComponent } from './modal/modal.component';
 import { InfrastructureModule } from './infrastructure/infrastructure.module';
 import { NocontentComponent } from './nocontent/nocontent.component';
 import { PagingComponent } from './paging/paging.component';
+import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { PagingComponent } from './paging/paging.component';
     FooterComponent,
     ModalComponent,
     NocontentComponent,
-    PagingComponent
+    PagingComponent,
+    LoadingComponent
   ],
   exports: [
     HeaderComponent,
@@ -31,7 +33,8 @@ import { PagingComponent } from './paging/paging.component';
     FooterComponent,
     ModalComponent,
     InfrastructureModule,
-    PagingComponent
+    PagingComponent,
+    LoadingComponent
   ]
 })
 export class CoreModule { }

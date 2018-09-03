@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router, NavigationEnd } from '@angular/router';
+import { empty } from '../../../../node_modules/rxjs';
+import { catchError, finalize } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { ListItem } from '../../model/list-item.model';
 
 import { ListService } from '../list.service';
+import { LoadingService } from '../../core/loading/loading.service';
+import { forEach } from '../../../../node_modules/@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-list',
@@ -19,15 +23,16 @@ export class ListComponent implements OnInit {
   public currentPage: number;
   public totalPages: number;
   public pageSizeOptions = {
-    minSize: 1,
-    maxSize: 5
+    minSize: 5,
+    maxSize: 10
   };
   public textFragment: string;
 
   private deletedID: number;
   private listItemIdFromUrl: string;
 
-  constructor(private listService: ListService, private route: ActivatedRoute, private router: Router) {
+  constructor(private listService: ListService, private route: ActivatedRoute,
+              private router: Router, private loadingService: LoadingService) {
     this.router.events.forEach(event => {
       if (event instanceof NavigationEnd) {
         if (event.url.includes('courses')) {
@@ -54,15 +59,27 @@ export class ListComponent implements OnInit {
   }
 
   getListFromBE() {
-    this.listService.getList(this.currentPage, this.pageSize, this.textFragment).subscribe((data) => {
-      this.listItems = data['items'];
+    this.showLoader();
+    this.listService.getList(this.currentPage, this.pageSize, this.textFragment)
+    // .pipe(
+    //   catchError(value => {
+    //     console.warn(value);
+    //     return empty();
+    //   })
+    // )
+
+    .subscribe((data) => {
+      this.listItems = [].concat(data['items']);
       this.totalPages = data['totalPages'];
+      this.hideLoader();
     });
   }
 
   getUsersFromBE() {
+    this.showLoader();
     this.listService.getUsers().subscribe((res: any[]) => {
       console.log(res);
+      this.hideLoader();
     });
   }
 
@@ -132,5 +149,13 @@ export class ListComponent implements OnInit {
       this.textFragment = data;
     });
     this.getListFromBE();
+  }
+
+  private showLoader() {
+    this.loadingService.showLoader();
+  }
+
+  private hideLoader() {
+    this.loadingService.hideLoader();
   }
 }
