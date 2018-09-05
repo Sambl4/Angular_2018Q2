@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Directive } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { StoreModule } from '@ngrx/store';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
@@ -18,7 +17,6 @@ import { AuthorizationModule } from './authorization/authorization.module';
 import { CanActivateList } from './list/canActivateList.guard';
 
 import { AuthInterceptor } from './authorization/auth-interceptor';
-import { ReducerModule } from './store/reducer.module';
 
 @NgModule({
   declarations: [
@@ -27,7 +25,6 @@ import { ReducerModule } from './store/reducer.module';
   imports: [
     BrowserModule,
     RouterModule.forRoot(ROUTES),
-    StoreModule.forRoot(ReducerModule),
     HttpClientModule,
     CoreModule,
     ListModule,

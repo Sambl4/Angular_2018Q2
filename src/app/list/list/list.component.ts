@@ -2,6 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router, NavigationEnd } from '@angular/router';
 import { empty } from '../../../../node_modules/rxjs';
 import { catchError, finalize } from 'rxjs/operators';
+
+import { Store, select } from '@ngrx/store';
+import { AppState, ListState } from '../../core/+store';
+import * as ListActions from '../../core/+store/list/list.actions';
+
+import { Observable } from 'rxjs';
+
 import * as _ from 'lodash';
 import { ListItem } from '../../model/list-item.model';
 
@@ -17,6 +24,8 @@ import { forEach } from '../../../../node_modules/@angular/router/src/utils/coll
 
 export class ListComponent implements OnInit {
   public listItems: ListItem[] = [];
+  public listState$: Observable<ListState>;
+
   public options: any;
   public routeParams: any = {};
   public pageSize: number;
@@ -31,8 +40,13 @@ export class ListComponent implements OnInit {
   private deletedID: number;
   private listItemIdFromUrl: string;
 
-  constructor(private listService: ListService, private route: ActivatedRoute,
-              private router: Router, private loadingService: LoadingService) {
+  constructor(
+    private listService: ListService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private loadingService: LoadingService,
+    private store: Store<AppState>
+  ) {
     this.router.events.forEach(event => {
       if (event instanceof NavigationEnd) {
         if (event.url.includes('courses')) {
@@ -46,7 +60,12 @@ export class ListComponent implements OnInit {
   ngOnInit() {
     this.pageSize = this.pageSizeOptions.minSize;
     this.currentPage = 1;
-    this.getListFromBE();
+
+    this.listState$ = this.store.pipe(select('list'));
+    this.listState$.subscribe(result => {
+      this.listItems = [].concat(result.data);
+    });
+    // this.getListFromBE();
 
     let itemById = this.listItems[this.listService.getListItemById(+this.listItemIdFromUrl)];
     if (this.listItemIdFromUrl === 'new') {
@@ -100,6 +119,10 @@ export class ListComponent implements OnInit {
       console.log(data);
       this.getListFromBE();
     }) : null;
+  }
+
+  editItemById(item: ListItem) {
+    this.store.dispatch(new ListActions.EditListItem(item));
   }
 
   updateItem(item: ListItem) {
