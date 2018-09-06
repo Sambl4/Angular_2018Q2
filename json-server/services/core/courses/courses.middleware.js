@@ -24,8 +24,8 @@ module.exports = (server) => {
             course.description.toUpperCase().indexOf(req.query['textFragment'].toUpperCase()) >= 0;
     }) : coursesDB;
 
-  let currentPage = +req.query.currentPage;
-  let pageSize = +req.query.pageSize;
+    let currentPage = +req.query.currentPage;
+    let pageSize = +req.query.pageSize;
       // calculate total pages
       let totalPages = Math.ceil(courses.length / pageSize);
 
@@ -61,10 +61,13 @@ module.exports = (server) => {
 
       let pages = courses.slice(startIndex, endIndex)
 
-    res.json({
-      items: pages,
-      totalPages: totalPages
-    });
+      setTimeout(function responseDelay() {
+        res.json({
+          items: pages,
+          totalPages: totalPages
+        });
+      }, 1000);
+    
   });
 
   router.delete('/courses', (req, res, next) => {
