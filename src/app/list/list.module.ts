@@ -5,7 +5,8 @@ import { ShareModule } from '../share/share.module';
 import { RouterModule } from '@angular/router';
 
 import { StoreModule } from '@ngrx/store';
-import { listReducer } from '../core/+store';
+import { EffectsModule } from '@ngrx/effects';
+import { listReducer, ListEffects } from '../core/+store';
 
 import { SearchbarComponent } from './searchbar/searchbar.component';
 
@@ -22,7 +23,8 @@ import { CoreModule } from '../core/core.module';
     ShareModule,
     CoreModule,
     RouterModule,
-    StoreModule.forFeature('list', listReducer)
+    StoreModule.forFeature('list', listReducer),
+    EffectsModule.forFeature([ListEffects])
   ],
   declarations: [
     ListComponent,

@@ -9,7 +9,28 @@ export function listReducer(state = initialListState, action: ListActions): List
     switch (action.type) {
         case ListActionTypes.GET_LIST: {
             return {
-                ...state
+                ...state,
+                loading: true
+            };
+        }
+
+        case ListActionTypes.GET_LIST_SUCCESS: {
+            // const data = [...<Array<ListItem>>action.payload];
+            return {
+                ...state,
+                data: action.payload,
+                loading: false,
+                loaded: true
+            };
+        }
+
+        case ListActionTypes.GET_LIST_FAILURE: {
+            const error = action.payload;
+            return {
+                ...state,
+                loading: false,
+                loaded: false,
+                error
             };
         }
 
@@ -33,7 +54,7 @@ export function listReducer(state = initialListState, action: ListActions): List
 
         case ListActionTypes.EDIT_LIST_ITEM: {
             const id = (<ListItem>action.payload).id;
-            const data = state.data.map(item => {
+            const data = state.data['items'].map(item => {
                 if (item.id === id) {
                     return { ...action.payload, editMode: true };
                 }

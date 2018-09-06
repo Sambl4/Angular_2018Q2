@@ -61,9 +61,12 @@ export class ListComponent implements OnInit {
     this.pageSize = this.pageSizeOptions.minSize;
     this.currentPage = 1;
 
+    this.store.dispatch(new ListActions.GetList());
     this.listState$ = this.store.pipe(select('list'));
     this.listState$.subscribe(result => {
-      this.listItems = [].concat(result.data);
+      if (result.data['items']) {
+        this.listItems = [].concat(result.data['items']);
+      }
     });
     // this.getListFromBE();
 
@@ -155,7 +158,8 @@ export class ListComponent implements OnInit {
   }
 
   loadMore() {
-    ++this.currentPage;
+    // ++this.currentPage;
+    this.pageSize = this.pageSize + 5;
     this.listService.getList(this.currentPage, this.pageSize).subscribe((data) => {
       this.listItems = this.listItems.concat(data);
     });

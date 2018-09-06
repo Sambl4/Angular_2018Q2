@@ -35,6 +35,7 @@ export class ListService {
     return this.http.get<ListItem[]>(`${BASE_COURSES_URL}`,
       { params: params });
   }
+
   public getUsers(): Observable<any[]> {
     return this.http.get<any[]>(`${BASE_USERS_URL}`);
   }
