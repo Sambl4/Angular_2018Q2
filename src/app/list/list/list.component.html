@@ -29,6 +29,7 @@
           *ngFor="let item of (listItems | orderBycreationDate)"
           [listItem]="item"
           (editItemById)="editItemById($event)"
+          (cancelEditItemById)="cancelEditItemById($event)"
           (deleteItemById)="deleteItemById($event)"
           (updateItem)="updateItem($event)"
           (setUrlParams)="setUrlParams($event)"

@@ -58,6 +58,7 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.showLoader();
     this.pageSize = this.pageSizeOptions.minSize;
     this.currentPage = 1;
 
@@ -66,6 +67,11 @@ export class ListComponent implements OnInit {
     this.listState$.subscribe(result => {
       if (result.data['items']) {
         this.listItems = [].concat(result.data['items']);
+        this.totalPages = result.data['totalPages'];
+
+        if (result.loaded) {
+          this.hideLoader();
+        }
       }
     });
     // this.getListFromBE();
@@ -126,6 +132,17 @@ export class ListComponent implements OnInit {
 
   editItemById(item: ListItem) {
     this.store.dispatch(new ListActions.EditListItem(item));
+
+    this.listState$ = this.store.pipe(select('list'));
+    this.listState$.subscribe(result => {
+      if (result.data) {
+        this.listItems = [].concat(result.data);
+      }
+    });
+  }
+
+  cancelEditItemById(item: ListItem) {
+    this.store.dispatch(new ListActions.CancelEditListItem(item));
   }
 
   updateItem(item: ListItem) {

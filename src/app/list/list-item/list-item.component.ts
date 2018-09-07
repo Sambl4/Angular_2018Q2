@@ -16,6 +16,7 @@ import { EditListItem } from '../../core/+store';
 export class ListItemComponent implements OnInit {
   @Input() public listItem: ListItem;
   @Output() editItemById: EventEmitter<ListItem> = new EventEmitter<ListItem>();
+  @Output() cancelEditItemById: EventEmitter<ListItem> = new EventEmitter<ListItem>();
   @Output() deleteItemById: EventEmitter<ListItem> = new EventEmitter<ListItem>();
   @Output() updateItem: EventEmitter<ListItem> = new EventEmitter<ListItem>();
   @Output() setUrlParams: EventEmitter<ListItem> = new EventEmitter<ListItem>();
@@ -24,6 +25,8 @@ export class ListItemComponent implements OnInit {
   constructor( ) { }
 
   ngOnInit() {
+    console.log(this.listItem);
+
   }
 
   deleteItem(Item: ListItem) {
@@ -49,8 +52,9 @@ export class ListItemComponent implements OnInit {
     if (!item.title && !item.description) {
       this.deleteItem(item);
     }
-    const editModeItem: ListItem = cloneDeep(item);
-    editModeItem.editMode = !this.listItem.editMode;
-    this.listItem = editModeItem;
+    // const editModeItem: ListItem = cloneDeep(item);
+    // editModeItem.editMode = !this.listItem.editMode;
+    // this.listItem = editModeItem;
+    this.cancelEditItemById.emit(item);
   }
 }
