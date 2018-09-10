@@ -58,23 +58,10 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.showLoader();
     this.pageSize = this.pageSizeOptions.minSize;
     this.currentPage = 1;
 
-    this.store.dispatch(new ListActions.GetList());
-    this.listState$ = this.store.pipe(select('list'));
-    this.listState$.subscribe(result => {
-      if (result.data['items']) {
-        this.listItems = [].concat(result.data['items']);
-        this.totalPages = result.data['totalPages'];
-
-        if (result.loaded) {
-          this.hideLoader();
-        }
-      }
-    });
-    // this.getListFromBE();
+    this.getListFromBE();
 
     let itemById = this.listItems[this.listService.getListItemById(+this.listItemIdFromUrl)];
     if (this.listItemIdFromUrl === 'new') {
@@ -87,18 +74,32 @@ export class ListComponent implements OnInit {
   }
 
   getListFromBE() {
+    // this.showLoader();
+    // this.listService.getList(this.currentPage, this.pageSize, this.textFragment)
+    // .pipe(
+    //   catchError(value => {
+    //     console.warn(value);
+    //     return empty();
+    //   })
+    // )
+    // .subscribe((data) => {
+    //   this.listItems = [].concat(data['items']);
+    //   this.totalPages = data['totalPages'];
+    //   this.hideLoader();
+    // });
+
     this.showLoader();
-    this.listService.getList(this.currentPage, this.pageSize, this.textFragment)
-    .pipe(
-      catchError(value => {
-        console.warn(value);
-        return empty();
-      })
-    )
-    .subscribe((data) => {
-      this.listItems = [].concat(data['items']);
-      this.totalPages = data['totalPages'];
-      this.hideLoader();
+    this.store.dispatch(new ListActions.GetList());
+    this.listState$ = this.store.pipe(select('list'));
+    this.listState$.subscribe(result => {
+      if (result.data) {
+        this.listItems = [].concat(result.data);
+        this.totalPages = result.totalPages;
+
+        if (result.loaded) {
+          this.hideLoader();
+        }
+      }
     });
   }
 
@@ -123,8 +124,8 @@ export class ListComponent implements OnInit {
     };
   }
 
-  confirmResult(result: boolean) {
-    result ? this.listService.removeListItemById(this.deletedID).subscribe((data) => {
+  confirmResult(confirmResult: boolean) {
+    confirmResult ? this.listService.removeListItemById(this.deletedID).subscribe((data) => {
       console.log(data);
       this.getListFromBE();
     }) : null;
@@ -143,6 +144,13 @@ export class ListComponent implements OnInit {
 
   cancelEditItemById(item: ListItem) {
     this.store.dispatch(new ListActions.CancelEditListItem(item));
+
+    this.listState$ = this.store.pipe(select('list'));
+    this.listState$.subscribe(result => {
+      if (result.data) {
+        this.listItems = [].concat(result.data);
+      }
+    });
   }
 
   updateItem(item: ListItem) {

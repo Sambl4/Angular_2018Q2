@@ -15,22 +15,14 @@ export function listReducer(state = initialListState, action: ListActions): List
         }
 
         case ListActionTypes.GET_LIST_SUCCESS: {
-            // const data = [...<Array<ListItem>>action.payload];
+            const data = action.payload['items'];
+            const totalPages = action.payload['totalPages'];
             return {
                 ...state,
-                data: action.payload,
+                data: data,
+                totalPages: totalPages,
                 loading: false,
                 loaded: true
-            };
-        }
-
-        case ListActionTypes.GET_LIST_FAILURE: {
-            const error = action.payload;
-            return {
-                ...state,
-                loading: false,
-                loaded: false,
-                error
             };
         }
 
@@ -54,7 +46,7 @@ export function listReducer(state = initialListState, action: ListActions): List
 
         case ListActionTypes.EDIT_LIST_ITEM: {
             const id = (<ListItem>action.payload).id;
-            const data = state.data['items'].map(item => {
+            const data = state.data.map(item => {
                 if (item.id === id) {
                     return { ...action.payload, editMode: true };
                 }
@@ -66,9 +58,27 @@ export function listReducer(state = initialListState, action: ListActions): List
             };
         }
 
-        case ListActionTypes.DELETE_LIST_ITEM: {
+        case ListActionTypes.CANCEL_EDIT_LIST_ITEM: {
+            const id = (<ListItem>action.payload).id;
+            const data = state.data.map(item => {
+                if (item.id === id) {
+                    return { ...action.payload, editMode: false};
+                }
+                return item;
+            });
             return {
-                ...state
+                ...state,
+                data
+            };
+        }
+
+        case ListActionTypes.RESULT_FAILURE: {
+            const error = action.payload;
+            return {
+                ...state,
+                loading: false,
+                loaded: false,
+                error
             };
         }
 

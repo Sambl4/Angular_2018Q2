@@ -16,7 +16,7 @@ export class ListEffects {
         switchMap(() =>
             this.listService.getList(1, 5).pipe(
                 map(list => new ListActions.GetListSuccess(list)),
-                catchError(err => of (new ListActions.GetListFailure(err))))
+                catchError(err => of (new ListActions.ResultFailure(err))))
         )
     );
 
