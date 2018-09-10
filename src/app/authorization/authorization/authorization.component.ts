@@ -4,6 +4,12 @@ import { FormBuilder, FormControl, FormGroup, Validators, ReactiveFormsModule } 
 
 import { Router } from '@angular/router';
 
+import { Store, select } from '@ngrx/store';
+import { AppState, AuthState } from '../../core/+store';
+import * as AuthActions from '../../core/+store/auth/auth.actions';
+
+import { Observable } from 'rxjs';
+
 import { AuthorizationService } from '../authorization.service';
 import { User } from '../../model/user.model';
 
@@ -14,6 +20,7 @@ import { User } from '../../model/user.model';
 })
 
 export class AuthorizationComponent implements OnInit {
+  public authState$: Observable<AuthState>;
 
   public needRegister: boolean;
   public emailExists: boolean;
@@ -38,7 +45,8 @@ export class AuthorizationComponent implements OnInit {
 
   constructor(private authorizationService: AuthorizationService,
               private router: Router,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private store: Store<AppState>) {
      this.form = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -60,6 +68,10 @@ export class AuthorizationComponent implements OnInit {
     this.isAuthenticated = false;
     this.submitted = false;
     this.emailExists = false;
+    // this.store.dispatch(new AuthActions.AuthRequest());
+
+    // this.authState$ = this.store.pipe(select('auth'));
+
     this.authorizationService.IsAuthenticated();
   }
 

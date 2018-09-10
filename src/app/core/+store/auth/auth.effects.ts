@@ -4,20 +4,19 @@ import { Action } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { AuthorizationService } from '../../../authorization/authorization.service';
-import * as authActions from './auth.actions';
+import * as AuthActions from './auth.actions';
 
 @Injectable()
 export class AuthEffects {
-    // @Effect()
-    // AuthRequestEffect$: Observable<Action> = this.actions$.pipe(
-    //     ofType<authActions.AuthRequestAction>(
-    //         authActions.AuthActionTypes.AUTH_REQUEST
-    //     ),
-    //     switchMap(action =>
-    //         // this.authorizationService.isAuthenticated(action.payload.state)
-    //         this.authorizationService.isAuthenticated(action.type)
-    //     )
-    // );
+    @Effect()
+    AuthRequest$ = this.actions$.pipe(
+        ofType<AuthActions.AuthRequest>(AuthActions.AuthActionTypes.AUTH_REQUEST),
+        switchMap(() => this.authorizationService.IsAuthenticated().pipe(
+                // map((result: boolean) => new AuthActions.AuthSuccess(result)),
+
+            )
+        )
+    );
 
     constructor(private authorizationService: AuthorizationService, private actions$: Actions) {}
 }

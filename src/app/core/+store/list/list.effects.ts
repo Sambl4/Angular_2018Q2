@@ -3,7 +3,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
 
 import { Observable, forkJoin, of } from 'rxjs';
-import { switchMap, catchError, map, exhaustMap } from 'rxjs/operators';
+import { switchMap, catchError, map } from 'rxjs/operators';
 
 import * as ListActions from './list.actions';
 import { ListService } from '../../../list/list.service';
@@ -16,7 +16,8 @@ export class ListEffects {
         switchMap(() =>
             this.listService.getList(1, 5).pipe(
                 map(list => new ListActions.GetListSuccess(list)),
-                catchError(err => of (new ListActions.ResultFailure(err))))
+                catchError(err => of (new ListActions.ResultFailure(err)))
+            )
         )
     );
 
