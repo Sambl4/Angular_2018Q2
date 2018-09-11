@@ -4,6 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { ShareModule } from '../share/share.module';
 import { RouterModule } from '@angular/router';
 
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { listReducer, ListEffects } from '../core/+store';
+
 import { SearchbarComponent } from './searchbar/searchbar.component';
 
 import { ListComponent } from './list/list.component';
@@ -18,7 +22,9 @@ import { CoreModule } from '../core/core.module';
     FormsModule,
     ShareModule,
     CoreModule,
-    RouterModule
+    RouterModule,
+    StoreModule.forFeature('list', listReducer),
+    EffectsModule.forFeature([ListEffects])
   ],
   declarations: [
     ListComponent,
