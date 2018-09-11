@@ -25,8 +25,6 @@ export class ListItemComponent implements OnInit {
   constructor( ) { }
 
   ngOnInit() {
-    console.log(this.listItem);
-
   }
 
   deleteItem(Item: ListItem) {

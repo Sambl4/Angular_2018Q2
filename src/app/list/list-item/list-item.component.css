@@ -53,3 +53,8 @@
   background: rgb(0, 0, 0, 0.4);
   z-index: 1000;
 }
+
+.author {
+  border: 1px solid lightgrey;
+  margin-right: 10px;
+}

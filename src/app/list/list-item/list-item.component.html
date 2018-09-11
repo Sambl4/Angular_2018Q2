@@ -16,6 +16,9 @@
       </section>
     </div>
     <div class='card-description' >{{listItem.description}}</div>
+    <div class="card-footer text-muted">
+      <span *ngFor="let author of listItem.authors" class="btn btn-light author">{{author.firstName}} {{author.lastName}}</span>
+    </div>
   </div>
   <section class="card-control-section btn-group-vertical">
     <button (click)="editItem(listItem)" class="btn btn-outline-info">Edit</button>
