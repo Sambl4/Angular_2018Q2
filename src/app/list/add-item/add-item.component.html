@@ -24,7 +24,10 @@
     </textarea>
   </div>
   <div class='card-authors'>
-    <app-multi-input></app-multi-input>
+    <app-multi-input
+      [options]="listItem.authors"
+      (changedOptions)="changedDate($event)">
+    </app-multi-input>
   </div>
 </div>
 <section class="card-control-section btn-group-vertical">
